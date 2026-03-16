@@ -27,21 +27,20 @@ A hands-on workshop covering IAM Identity Center (SSO) local setup and four core
 
 ---
 
-## Quick Reference
+## AWS Documentation
 
-| Task | CLI Command |
+| Service | Reference |
 |---|---|
-| SSO login | `aws sso login --profile workshop` |
-| Who am I? | `aws sts get-caller-identity --profile workshop` |
-| Create parameter | `aws ssm put-parameter --name /x --value y --type String --profile workshop` |
-| Get parameter | `aws ssm get-parameter --name /x --with-decryption --profile workshop` |
-| Get all by path | `aws ssm get-parameters-by-path --path /workshop/ --recursive --profile workshop` |
-| Run a command | `aws ssm send-command --document-name AWS-RunShellScript --targets ... --profile workshop` |
-| Check command output | `aws ssm get-command-invocation --command-id ID --instance-id ID --profile workshop` |
-| Start session | `aws ssm start-session --target i-xxxxxxxxx --profile dev` |
-| Port forward | `aws ssm start-session --target i-xxx --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["5432"],"localPortNumber":["5432"]}' --profile dev` |
-| Create association | `aws ssm create-association --name DOC --targets ... --schedule-expression ... --profile dev` |
-| Trigger association now | `aws ssm start-associations-once --association-ids ID --profile dev` |
+| IAM Identity Center | [What is IAM Identity Center?](https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html) |
+| IAM Identity Center — CLI SSO | [Configuring the AWS CLI to use IAM Identity Center](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html) |
+| SSM Overview | [What is AWS Systems Manager?](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html) |
+| SSM Parameter Store | [AWS Systems Manager Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html) |
+| SSM Run Command | [AWS Systems Manager Run Command](https://docs.aws.amazon.com/systems-manager/latest/userguide/execute-remote-commands.html) |
+| SSM Session Manager | [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html) |
+| SSM State Manager | [AWS Systems Manager State Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state.html) |
+| SSM Agent — Ubuntu | [Install SSM Agent on Ubuntu Server](https://docs.aws.amazon.com/systems-manager/latest/userguide/agent-install-ubuntu-64-snap.html) |
+| Session Manager Plugin | [Install the Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) |
+| SSM Managed Policy | [AmazonSSMManagedInstanceCore](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonSSMManagedInstanceCore.html) |
 
 ---
 
