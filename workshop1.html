@@ -7,7 +7,6 @@
 <style>
 :root {
   --aws-orange: #FF9900;
-  --aws-dark: #232F3E;
   --bg: #0D1117;
   --card: #161B22;
   --card2: #1C2333;
@@ -19,154 +18,206 @@
   --purple: #7C4DFF;
   --red: #FF5252;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:100%; height:100%; overflow:hidden; font-family:'Segoe UI',system-ui,sans-serif; background:#000; }
-.deck { width:100%; height:100vh; position:relative; }
-.slide { position:absolute; inset:0; display:none; flex-direction:column; background:var(--bg); color:var(--text); overflow:hidden; }
-.slide.active { display:flex; animation:slideIn .4s ease; }
-@keyframes slideIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
-@keyframes slideInR { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:none} }
-.slide.prev { animation:slideInR .4s ease; }
-.slide-header { background:linear-gradient(90deg,#1a1f2e 0%,#232F3E 60%,#1a1408 100%); border-bottom:3px solid var(--aws-orange); padding:.6rem 2rem; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
-.sh-left { display:flex; align-items:center; gap:12px; }
-.sh-logo { font-size:1.6rem; }
-.sh-title { font-size:1rem; font-weight:800; color:#fff; letter-spacing:.02em; }
-.sh-title span { color:var(--aws-orange); }
-.sh-right { display:flex; align-items:center; gap:10px; font-size:.72rem; color:var(--muted); }
-.sh-badge { background:rgba(255,153,0,.15); border:1px solid rgba(255,153,0,.35); color:var(--aws-orange); font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:10px; letter-spacing:.06em; }
-.slide-body { flex:1; overflow:hidden; display:flex; flex-direction:column; padding:1.5rem 2.5rem 1rem; }
-.slide-body.pad-sm { padding:1rem 2rem .8rem; }
-.title-slide { background:radial-gradient(ellipse 90% 70% at 50% 40%, rgba(255,153,0,.1) 0%, transparent 65%), linear-gradient(180deg,#0D1117 0%,#1a1f2e 100%); align-items:center; justify-content:center; text-align:center; }
-.title-slide .slide-body { align-items:center; justify-content:center; gap:1.2rem; }
-.ts-badge { background:rgba(255,153,0,.12); border:1px solid rgba(255,153,0,.35); color:var(--aws-orange); font-size:.78rem; font-weight:700; padding:6px 18px; border-radius:16px; letter-spacing:.06em; }
-.ts-h1 { font-size:clamp(2rem,5vw,3.8rem); font-weight:900; line-height:1.1; background:linear-gradient(135deg,#fff 30%,var(--aws-orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.ts-sub { font-size:1rem; color:var(--muted); max-width:620px; line-height:1.7; }
-.ts-meta { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; margin-top:.5rem; }
-.ts-pill { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:5px 16px; font-size:.75rem; color:var(--muted); }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size: 16px; }
+body { width:100vw; height:100vh; overflow:hidden; font-family:'Segoe UI',system-ui,sans-serif; background:#000; }
+
+.deck { width:100vw; height:100vh; position:relative; }
+.slide {
+  position:absolute; inset:0;
+  display:none; flex-direction:column;
+  background:var(--bg); color:var(--text);
+  overflow:hidden;
+}
+.slide.active { display:flex; animation:sIn .35s ease; }
+@keyframes sIn { from{opacity:0;transform:translateX(32px)} to{opacity:1;transform:none} }
+@keyframes sInR { from{opacity:0;transform:translateX(-32px)} to{opacity:1;transform:none} }
+.slide.prev { animation:sInR .35s ease; }
+
+/* ── HEADER ── */
+.hdr {
+  background:linear-gradient(90deg,#1a1f2e 0%,#232F3E 60%,#1a1408 100%);
+  border-bottom:3px solid var(--aws-orange);
+  padding:0 2rem;
+  height:54px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.hdr-l { display:flex; align-items:center; gap:10px; }
+.hdr-logo { font-size:1.5rem; line-height:1; }
+.hdr-title { font-size:1.05rem; font-weight:800; color:#fff; }
+.hdr-title span { color:var(--aws-orange); }
+.hdr-r { display:flex; align-items:center; gap:10px; font-size:.8rem; color:var(--muted); }
+.hdr-badge {
+  background:rgba(255,153,0,.15); border:1px solid rgba(255,153,0,.35);
+  color:var(--aws-orange); font-size:.75rem; font-weight:700;
+  padding:3px 12px; border-radius:10px; letter-spacing:.06em;
+}
+
+/* ── BODY ── */
+.body {
+  flex:1; min-height:0;
+  display:flex; flex-direction:column;
+  padding:1.4rem 2.2rem 1rem;
+  gap:.85rem;
+  overflow:hidden;
+}
+.body.slim { padding:1rem 2rem .8rem; gap:.7rem; }
+
+/* slide heading */
+.stag { font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--aws-orange); }
+.sh { font-size:1.65rem; font-weight:800; line-height:1.15; }
+.sh span { color:var(--aws-orange); }
+.ssub { font-size:.88rem; color:var(--muted); line-height:1.5; }
+
+/* ── LAYOUTS ── */
+.row { display:flex; gap:1rem; flex:1; min-height:0; overflow:hidden; }
+.col { display:flex; flex-direction:column; gap:.75rem; flex:1; min-width:0; overflow:hidden; }
+.col2 { flex:2; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.85rem; flex:1; min-height:0; overflow:hidden; }
+
+/* ── TITLE SLIDE ── */
+.title-slide {
+  background:radial-gradient(ellipse 90% 70% at 50% 42%, rgba(255,153,0,.12) 0%, transparent 65%),
+             linear-gradient(180deg,#0D1117 0%,#1a1f2e 100%);
+}
+.title-slide .body { align-items:center; justify-content:center; text-align:center; gap:1.1rem; }
+.ts-badge { background:rgba(255,153,0,.12); border:1px solid rgba(255,153,0,.35); color:var(--aws-orange); font-size:.82rem; font-weight:700; padding:7px 20px; border-radius:16px; letter-spacing:.06em; }
+.ts-h1 { font-size:clamp(2.2rem,5vw,4rem); font-weight:900; line-height:1.1; background:linear-gradient(135deg,#fff 30%,var(--aws-orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.ts-sub { font-size:1.05rem; color:var(--muted); max-width:640px; line-height:1.7; }
+.ts-meta { display:flex; gap:.85rem; flex-wrap:wrap; justify-content:center; }
+.ts-pill { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:6px 18px; font-size:.82rem; color:var(--muted); }
 .ts-pill strong { color:var(--text); }
-.ts-toc { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:.5rem; }
-.toc-chip { background:rgba(255,153,0,.1); border:1px solid rgba(255,153,0,.25); color:var(--aws-orange); font-size:.7rem; font-weight:600; padding:4px 12px; border-radius:8px; cursor:pointer; transition:all .2s; }
-.toc-chip:hover { background:rgba(255,153,0,.2); transform:translateY(-2px); }
-.section-divider { background:linear-gradient(135deg,#1a1f2e 0%,#232F3E 100%); align-items:center; justify-content:center; text-align:center; }
-.section-divider .slide-body { align-items:center; justify-content:center; gap:.75rem; }
-.sd-num { font-size:5rem; font-weight:900; color:rgba(255,153,0,.12); line-height:1; }
-.sd-tag { font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--aws-orange); }
-.sd-title { font-size:clamp(2rem,5vw,3.2rem); font-weight:900; background:linear-gradient(135deg,#fff 20%,var(--aws-orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.sd-sub { color:var(--muted); font-size:.9rem; max-width:550px; line-height:1.6; }
-.two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; flex:1; overflow:hidden; }
-.three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; flex:1; overflow:hidden; }
-.full-col { display:flex; flex-direction:column; gap:.75rem; flex:1; overflow:hidden; }
-.col { display:flex; flex-direction:column; gap:.75rem; overflow:hidden; }
-.s-title { font-size:1.5rem; font-weight:800; margin-bottom:.15rem; }
-.s-title span { color:var(--aws-orange); }
-.s-sub { font-size:.78rem; color:var(--muted); margin-bottom:.5rem; }
-.s-tag { font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--aws-orange); margin-bottom:.25rem; }
-.card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1rem 1.1rem; }
-.card.accent-l { border-left:3px solid var(--aws-orange); }
-.card.accent-l.blue { border-left-color:var(--blue); }
-.card.accent-l.green { border-left-color:var(--green); }
-.card.accent-l.purple { border-left-color:var(--purple); }
-.card.accent-l.red { border-left-color:var(--red); }
-.card h4 { font-size:.82rem; font-weight:700; margin-bottom:.3rem; display:flex; align-items:center; gap:.4rem; }
-.card p, .card li { font-size:.75rem; color:var(--muted); line-height:1.6; }
-.card ul { padding-left:1rem; }
-.card.top-accent { border-top:3px solid var(--aws-orange); }
-.card.top-accent.blue { border-top-color:var(--blue); }
-.card.top-accent.green { border-top-color:var(--green); }
-.card.top-accent.purple { border-top-color:var(--purple); }
-.code-wrap { background:#0a0d13; border:1px solid var(--border); border-radius:8px; overflow:hidden; flex-shrink:0; }
-.code-bar { background:#161B22; padding:4px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
-.code-bar span { font-size:.65rem; color:var(--muted); font-family:monospace; letter-spacing:.05em; }
-.code-dots { display:flex; gap:5px; }
-.code-dots i { width:9px; height:9px; border-radius:50%; }
-pre { padding:.75rem 1rem; font-family:'Courier New',monospace; font-size:.72rem; color:#79C0FF; line-height:1.8; overflow-x:auto; }
-pre .kw { color:var(--aws-orange); }
-pre .str { color:#A5D6FF; }
-pre .cm { color:#8B949E; }
-pre .gr { color:var(--green); }
-pre .pu { color:#D2A8FF; }
-.tbl { width:100%; border-collapse:collapse; font-size:.74rem; }
-.tbl th { background:rgba(255,153,0,.1); color:var(--aws-orange); font-weight:700; padding:7px 12px; text-align:left; border-bottom:2px solid rgba(255,153,0,.25); }
-.tbl td { padding:7px 12px; border-bottom:1px solid var(--border); color:var(--muted); }
-.tbl tr:hover td { background:rgba(255,255,255,.02); }
+.toc { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; }
+.toc-chip { background:rgba(255,153,0,.1); border:1px solid rgba(255,153,0,.25); color:var(--aws-orange); font-size:.78rem; font-weight:600; padding:5px 14px; border-radius:8px; cursor:pointer; transition:all .2s; }
+.toc-chip:hover { background:rgba(255,153,0,.22); transform:translateY(-2px); }
+
+/* ── SECTION DIVIDER ── */
+.sec-div { background:linear-gradient(135deg,#1a1f2e 0%,#232F3E 100%); }
+.sec-div .body { align-items:center; justify-content:center; text-align:center; gap:.85rem; }
+.sd-num { font-size:7rem; font-weight:900; color:rgba(255,153,0,.1); line-height:1; }
+.sd-tag { font-size:.8rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--aws-orange); }
+.sd-title { font-size:clamp(2.2rem,5vw,3.5rem); font-weight:900; background:linear-gradient(135deg,#fff 20%,var(--aws-orange) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.15; }
+.sd-sub { color:var(--muted); font-size:1rem; max-width:580px; line-height:1.6; }
+
+/* ── CARDS ── */
+.card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:.9rem 1.1rem; }
+.card.al { border-left:3px solid var(--aws-orange); border-radius:0 10px 10px 0; }
+.card.al.blue { border-left-color:var(--blue); }
+.card.al.green { border-left-color:var(--green); }
+.card.al.purple { border-left-color:var(--purple); }
+.card.al.red { border-left-color:var(--red); }
+.card.at { border-top:3px solid var(--aws-orange); }
+.card.at.blue { border-top-color:var(--blue); }
+.card.at.green { border-top-color:var(--green); }
+.card.at.purple { border-top-color:var(--purple); }
+.card h4 { font-size:.9rem; font-weight:700; margin-bottom:.35rem; display:flex; align-items:center; gap:.4rem; }
+.card p, .card li { font-size:.83rem; color:var(--muted); line-height:1.65; }
+.card ul { padding-left:1.1rem; }
+
+/* ── HIGHLIGHT BOX ── */
+.hl { background:rgba(255,153,0,.07); border:1px solid rgba(255,153,0,.25); border-radius:10px; padding:.9rem 1.1rem; }
+.hl.blue { background:rgba(79,195,247,.06); border-color:rgba(79,195,247,.25); }
+.hl.green { background:rgba(0,200,83,.06); border-color:rgba(0,200,83,.25); }
+.hl.purple { background:rgba(124,77,255,.06); border-color:rgba(124,77,255,.25); }
+.hl h4 { font-size:.9rem; font-weight:700; margin-bottom:.35rem; color:var(--aws-orange); }
+.hl.blue h4 { color:var(--blue); }
+.hl.green h4 { color:var(--green); }
+.hl.purple h4 { color:var(--purple); }
+.hl p, .hl li { font-size:.83rem; color:var(--muted); line-height:1.65; }
+.hl ul { padding-left:1.1rem; }
+
+/* ── CODE ── */
+.code { background:#080c12; border:1px solid var(--border); border-radius:8px; overflow:hidden; display:flex; flex-direction:column; }
+.code-bar { background:#161B22; padding:5px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); flex-shrink:0; }
+.code-bar span { font-size:.72rem; color:var(--muted); font-family:monospace; letter-spacing:.05em; }
+.dots { display:flex; gap:5px; }
+.dots i { width:9px; height:9px; border-radius:50%; display:block; }
+.code pre { padding:.8rem 1rem; font-family:'Courier New',monospace; font-size:.8rem; color:#79C0FF; line-height:1.75; overflow-x:auto; overflow-y:auto; flex:1; }
+.code pre .kw { color:var(--aws-orange); }
+.code pre .str { color:#A5D6FF; }
+.code pre .cm { color:#8B949E; }
+.code pre .gr { color:var(--green); }
+.code pre .pu { color:#D2A8FF; }
+
+/* ── TABLE ── */
+.tbl { width:100%; border-collapse:collapse; font-size:.82rem; }
+.tbl th { background:rgba(255,153,0,.1); color:var(--aws-orange); font-weight:700; padding:8px 13px; text-align:left; border-bottom:2px solid rgba(255,153,0,.25); }
+.tbl td { padding:8px 13px; border-bottom:1px solid var(--border); color:var(--muted); }
+.tbl tr:hover td { background:rgba(255,255,255,.025); }
 .ck { color:var(--green); font-weight:700; }
 .cx { color:var(--red); font-weight:700; }
-.flow { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
-.flow-box { background:var(--card); border:1px solid; border-radius:8px; padding:.5rem .85rem; font-size:.72rem; font-weight:600; text-align:center; flex-shrink:0; }
-.flow-arrow { color:var(--muted); font-size:.9rem; flex-shrink:0; }
-.step-list { display:flex; flex-direction:column; gap:.55rem; }
-.step-item { display:flex; align-items:flex-start; gap:.75rem; background:var(--card2); border-radius:8px; padding:.6rem .9rem; }
-.step-num { width:24px; height:24px; border-radius:50%; background:var(--aws-orange); color:#000; display:flex; align-items:center; justify-content:center; font-size:.68rem; font-weight:800; flex-shrink:0; margin-top:1px; }
-.step-content h4 { font-size:.8rem; font-weight:700; margin-bottom:1px; }
-.step-content p { font-size:.72rem; color:var(--muted); line-height:1.5; }
-.step-content code { color:var(--aws-orange); font-size:.7rem; background:rgba(255,153,0,.1); padding:1px 5px; border-radius:3px; }
-.badge-row { display:flex; flex-wrap:wrap; gap:.4rem; }
-.badge { font-size:.65rem; font-weight:700; padding:3px 10px; border-radius:8px; }
-.hl-box { background:rgba(255,153,0,.07); border:1px solid rgba(255,153,0,.25); border-radius:10px; padding:.85rem 1.1rem; }
-.hl-box.blue { background:rgba(79,195,247,.06); border-color:rgba(79,195,247,.25); }
-.hl-box.green { background:rgba(0,200,83,.06); border-color:rgba(0,200,83,.25); }
-.hl-box.purple { background:rgba(124,77,255,.06); border-color:rgba(124,77,255,.25); }
-.hl-box h4 { font-size:.82rem; font-weight:700; margin-bottom:.3rem; color:var(--aws-orange); }
-.hl-box.blue h4 { color:var(--blue); }
-.hl-box.green h4 { color:var(--green); }
-.hl-box.purple h4 { color:var(--purple); }
-.hl-box p, .hl-box li { font-size:.75rem; color:var(--muted); line-height:1.6; }
-.hl-box ul { padding-left:1rem; }
-.arch-layer { display:flex; align-items:center; justify-content:center; gap:.6rem; margin:.3rem 0; flex-wrap:wrap; }
-.arch-node { border:1px solid; border-radius:8px; padding:.5rem .9rem; font-size:.72rem; font-weight:600; text-align:center; background:var(--card2); }
-.arch-vert { display:flex; flex-direction:column; align-items:center; color:var(--muted); font-size:.6rem; gap:1px; }
-.arch-line { width:2px; height:20px; background:var(--border); }
-.icon-big { font-size:2.5rem; margin-bottom:.3rem; }
-.icon-md { font-size:1.6rem; margin-bottom:.25rem; }
-.progress-bar { position:fixed; bottom:0; left:0; height:3px; background:var(--aws-orange); transition:width .3s ease; z-index:999; }
-.nav-controls { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:.75rem; z-index:999; background:rgba(13,17,23,.92); backdrop-filter:blur(12px); border:1px solid var(--border); border-radius:30px; padding:.5rem 1.2rem; }
-.nav-btn { background:transparent; border:1px solid var(--border); color:var(--text); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:.85rem; transition:all .2s; display:flex; align-items:center; justify-content:center; }
-.nav-btn:hover { border-color:var(--aws-orange); color:var(--aws-orange); }
-.nav-counter { font-size:.72rem; color:var(--muted); min-width:70px; text-align:center; }
-.nav-dots { display:flex; gap:4px; }
-.nav-dot { width:6px; height:6px; border-radius:50%; background:var(--border); cursor:pointer; transition:all .2s; }
-.nav-dot.active { background:var(--aws-orange); width:18px; border-radius:3px; }
-.key-hint { position:fixed; bottom:1.2rem; right:1.5rem; font-size:.62rem; color:var(--muted); z-index:999; display:flex; gap:.4rem; align-items:center; }
-.key { background:var(--card); border:1px solid var(--border); border-radius:4px; padding:2px 6px; font-family:monospace; }
+
+/* ── STEPS ── */
+.steps { display:flex; flex-direction:column; gap:.55rem; }
+.step { display:flex; align-items:flex-start; gap:.8rem; background:var(--card2); border-radius:8px; padding:.65rem 1rem; }
+.step-n { width:26px; height:26px; border-radius:50%; background:var(--aws-orange); color:#000; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:800; flex-shrink:0; margin-top:2px; }
+.step h4 { font-size:.85rem; font-weight:700; margin-bottom:2px; }
+.step p { font-size:.78rem; color:var(--muted); line-height:1.5; }
+.step code { color:var(--aws-orange); font-size:.76rem; background:rgba(255,153,0,.1); padding:1px 5px; border-radius:3px; }
+
+/* ── ARCH nodes ── */
+.arch { display:flex; flex-direction:column; align-items:center; gap:0; }
+.arch-row { display:flex; align-items:center; justify-content:center; gap:.6rem; flex-wrap:wrap; }
+.anode { border:1px solid; border-radius:8px; padding:.5rem 1rem; font-size:.8rem; font-weight:600; text-align:center; background:var(--card2); }
+.aline { width:2px; height:22px; background:var(--border); }
+.alabel { font-size:.68rem; color:var(--muted); }
+
+/* ── PROGRESS / NAV ── */
+.prog { position:fixed; bottom:0; left:0; height:3px; background:var(--aws-orange); transition:width .3s; z-index:999; }
+.nav {
+  position:fixed; bottom:1.1rem; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:.75rem; z-index:999;
+  background:rgba(13,17,23,.93); backdrop-filter:blur(12px);
+  border:1px solid var(--border); border-radius:30px; padding:.5rem 1.3rem;
+}
+.nbtn { background:transparent; border:1px solid var(--border); color:var(--text); width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:.9rem; transition:all .2s; display:flex; align-items:center; justify-content:center; }
+.nbtn:hover { border-color:var(--aws-orange); color:var(--aws-orange); }
+.nctr { font-size:.8rem; color:var(--muted); min-width:72px; text-align:center; }
+.ndots { display:flex; gap:4px; }
+.ndot { width:7px; height:7px; border-radius:50%; background:var(--border); cursor:pointer; transition:all .2s; }
+.ndot.on { background:var(--aws-orange); width:20px; border-radius:3px; }
+.khint { position:fixed; bottom:1.1rem; right:1.5rem; font-size:.68rem; color:var(--muted); z-index:999; display:flex; gap:.4rem; align-items:center; }
+.key { background:var(--card); border:1px solid var(--border); border-radius:4px; padding:2px 7px; font-family:monospace; }
+
+/* icon helpers */
+.ico { font-size:1.8rem; margin-bottom:.2rem; line-height:1; }
 </style>
 </head>
 <body>
 <div class="deck" id="deck">
 
-<!-- SLIDE 1 — TITLE -->
+<!-- ═══ SLIDE 1 — TITLE ═══ -->
 <div class="slide title-slide active" id="s1">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">WORKSHOP -1</div><span>Mar 2026</span></div>
+  <div class="hdr">
+    <div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div>
+    <div class="hdr-r"><div class="hdr-badge">WORKSHOP -1</div><span>Mar 2026</span></div>
   </div>
-  <div class="slide-body">
+  <div class="body">
     <div class="ts-badge">☁️ AWS SYSTEMS MANAGER · IAM IDENTITY CENTER · DEVOPS</div>
-    <div class="ts-h1">AWS Workshop -1<br><span style="font-size:70%">Intelligent Product Solutions</span></div>
+    <div class="ts-h1">AWS Workshop -1<br><span style="font-size:72%">Intelligent Product Solutions</span></div>
     <div class="ts-sub">A complete guide to AWS Systems Manager, IAM Identity Center SSO, Session Manager, Configuration Management, and eliminating bastion hosts.</div>
     <div class="ts-meta">
       <div class="ts-pill">👤 Owner: <strong>Gopinaath (IPS)</strong></div>
       <div class="ts-pill">🗓️ <strong>March 17, 2026</strong></div>
       <div class="ts-pill">🎯 Developers &amp; DevOps Engineers</div>
     </div>
-    <div class="ts-toc">
+    <div class="toc">
       <span class="toc-chip" onclick="goTo(2)">01 · IAM Identity Center</span>
       <span class="toc-chip" onclick="goTo(7)">02 · Removing Bastion Hosts</span>
       <span class="toc-chip" onclick="goTo(11)">03 · Session Manager</span>
-      <span class="toc-chip" onclick="goTo(15)">04 · Config Management &amp; Ansible</span>
-      <span class="toc-chip" onclick="goTo(20)">05 · Run Command</span>
+      <span class="toc-chip" onclick="goTo(16)">04 · Config Mgmt &amp; Ansible</span>
+      <span class="toc-chip" onclick="goTo(21)">05 · Run Command</span>
       <span class="toc-chip" onclick="goTo(24)">06 · Parameter Store</span>
-      <span class="toc-chip" onclick="goTo(28)">07 · CLI Cheatsheet</span>
+      <span class="toc-chip" onclick="goTo(27)">07 · CLI Cheatsheet</span>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 2 — SECTION: IAM IDENTITY CENTER -->
-<div class="slide section-divider" id="s2">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 01</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 2 — SECTION 01 ═══ -->
+<div class="slide sec-div" id="s2">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 01</div></div></div>
+  <div class="body">
     <div class="sd-num">01</div>
     <div class="sd-tag">Getting Started</div>
     <div class="sd-title">🔐 IAM Identity Center<br>&amp; SSO Setup</div>
@@ -174,54 +225,39 @@ pre .pu { color:#D2A8FF; }
   </div>
 </div>
 
-<!-- SLIDE 3 — SSO Overview & Why -->
+<!-- ═══ SLIDE 3 — Why SSO ═══ -->
 <div class="slide" id="s3">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">01 · IAM IDENTITY CENTER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">IAM Identity Center</div>
-    <div class="s-title">Why <span>AWS SSO</span> over long-term keys?</div>
-    <div class="s-sub">Eliminate the risk of static credentials sitting in ~/.aws/credentials</div>
-    <div class="two-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">01 · IAM IDENTITY CENTER</div></div></div>
+  <div class="body slim">
+    <div class="stag">IAM Identity Center</div>
+    <div class="sh">Why <span>AWS SSO</span> over long-term keys?</div>
+    <div class="ssub">Eliminate the risk of static credentials sitting in ~/.aws/credentials</div>
+    <div class="row">
       <div class="col">
-        <div class="card accent-l red">
+        <div class="card al red">
           <h4>❌ Problem: Long-term Access Keys</h4>
-          <ul>
-            <li>Keys stored on disk in plain text</li>
-            <li>Easy to accidentally commit to git</li>
-            <li>Hard to rotate across many developers</li>
-            <li>No expiry — leaked key = permanent risk</li>
-            <li>No MFA enforcement possible</li>
-          </ul>
+          <ul><li>Keys stored on disk in plain text</li><li>Easy to accidentally commit to git</li><li>Hard to rotate across many developers</li><li>No expiry — leaked key = permanent risk</li><li>No MFA enforcement possible</li></ul>
         </div>
-        <div class="card accent-l green">
+        <div class="card al green">
           <h4>✅ Solution: IAM Identity Center SSO</h4>
-          <ul>
-            <li>Short-lived credentials (1–8 hrs TTL)</li>
-            <li>Centralized via org access portal</li>
-            <li>MFA enforced at the portal level</li>
-            <li>One login → multiple accounts/roles</li>
-            <li>Audit trail via CloudTrail automatically</li>
-          </ul>
+          <ul><li>Short-lived credentials (1–8 hrs TTL)</li><li>Centralized via org access portal</li><li>MFA enforced at the portal level</li><li>One login → multiple accounts/roles</li><li>Audit trail via CloudTrail automatically</li></ul>
         </div>
       </div>
       <div class="col">
-        <div class="hl-box">
+        <div class="hl">
           <h4>🏢 IPS Organization Details</h4>
-          <p><strong style="color:var(--text)">SSO Start URL:</strong><br><span style="font-family:monospace;color:var(--blue);font-size:.7rem;">https://d-9d677c6f3a.awsapps.com/start</span></p>
+          <p><strong style="color:var(--text)">SSO Start URL:</strong><br><span style="font-family:monospace;color:var(--blue);font-size:.82rem;">https://d-9d677c6f3a.awsapps.com/start</span></p>
           <p style="margin-top:.5rem;"><strong style="color:var(--text)">SSO Region:</strong> <span style="color:var(--blue)">ca-central-1</span></p>
-          <p style="margin-top:.5rem;"><strong style="color:var(--text)">Profile Name:</strong> <span style="color:var(--green)">dev</span></p>
+          <p style="margin-top:.3rem;"><strong style="color:var(--text)">Profile Name:</strong> <span style="color:var(--green)">dev</span></p>
         </div>
-        <div class="card accent-l blue">
+        <div class="card al blue">
           <h4>🔄 How Short-lived Creds Work</h4>
-          <div class="flow" style="flex-direction:column;align-items:flex-start;gap:.3rem;margin-top:.3rem;">
-            <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;"><span style="color:var(--aws-orange);font-weight:700;">1.</span> You run <code style="color:var(--blue)">aws sso login</code></div>
-            <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;"><span style="color:var(--aws-orange);font-weight:700;">2.</span> Browser opens → you authenticate + MFA</div>
-            <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;"><span style="color:var(--aws-orange);font-weight:700;">3.</span> SSO issues temporary STS token</div>
-            <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;"><span style="color:var(--aws-orange);font-weight:700;">4.</span> Token cached locally (auto-expires)</div>
-            <div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;"><span style="color:var(--aws-orange);font-weight:700;">5.</span> CLI uses token transparently</div>
+          <div style="display:flex;flex-direction:column;gap:.3rem;margin-top:.3rem;">
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.83rem;"><span style="color:var(--aws-orange);font-weight:700;">1.</span> You run <code style="color:var(--blue)">aws sso login</code></div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.83rem;"><span style="color:var(--aws-orange);font-weight:700;">2.</span> Browser opens → authenticate + MFA</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.83rem;"><span style="color:var(--aws-orange);font-weight:700;">3.</span> SSO issues temporary STS token</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.83rem;"><span style="color:var(--aws-orange);font-weight:700;">4.</span> Token cached locally (auto-expires)</div>
+            <div style="display:flex;align-items:center;gap:.5rem;font-size:.83rem;"><span style="color:var(--aws-orange);font-weight:700;">5.</span> CLI uses token transparently</div>
           </div>
         </div>
       </div>
@@ -229,73 +265,50 @@ pre .pu { color:#D2A8FF; }
   </div>
 </div>
 
-<!-- SLIDE 4 — SSO Prerequisites -->
+<!-- ═══ SLIDE 4 — SSO Prerequisites ═══ -->
 <div class="slide" id="s4">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">01 · IAM IDENTITY CENTER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Prerequisites &amp; Verification</div>
-    <div class="s-title">✅ Before You <span>Configure SSO</span></div>
-    <div class="three-col" style="margin-top:.75rem;">
-      <div class="card top-accent">
-        <div class="icon-md">🧰</div>
-        <h4>AWS CLI v2</h4>
-        <p>Must be v2 — SSO is not supported in CLI v1. Verify with:</p>
-        <div class="code-wrap" style="margin-top:.4rem;"><pre>aws --version
-<span class="cm"># Expected: aws-cli/2.x.x</span></pre></div>
-      </div>
-      <div class="card top-accent blue">
-        <div class="icon-md">🌐</div>
-        <h4>Access Portal</h4>
-        <p>Access to the IPS AWS org portal. You'll need your org credentials + MFA device ready during setup.</p>
-        <div style="margin-top:.5rem;font-size:.7rem;color:var(--blue);font-family:monospace;word-break:break-all;">https://d-9d677c6f3a.awsapps.com/start</div>
-      </div>
-      <div class="card top-accent green">
-        <div class="icon-md">🖥️</div>
-        <h4>Modern Browser</h4>
-        <p>Chrome, Firefox or Edge required for the browser-based authorization step during <code style="color:var(--green)">aws configure sso</code>.</p>
-      </div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">01 · IAM IDENTITY CENTER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Prerequisites &amp; Verification</div>
+    <div class="sh">✅ Before You <span>Configure SSO</span></div>
+    <div class="grid3" style="flex:0;gap:.85rem;margin-bottom:.1rem;">
+      <div class="card at"><div class="ico">🧰</div><h4>AWS CLI v2</h4><p>Must be v2 — SSO is not supported in CLI v1. Verify with: <code style="color:var(--green)">aws --version</code></p></div>
+      <div class="card at blue"><div class="ico">🌐</div><h4>Access Portal</h4><p>Access to the IPS AWS org portal. You'll need your org credentials + MFA device during setup.</p></div>
+      <div class="card at green"><div class="ico">🖥️</div><h4>Modern Browser</h4><p>Chrome, Firefox or Edge required for the browser-based authorization step.</p></div>
     </div>
-    <div style="margin-top:.75rem;">
-      <div class="code-wrap">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Verify CLI Version</span></div>
-        <pre>aws --version
+    <div class="code" style="flex:1;">
+      <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Verify CLI Version</span></div>
+      <pre>aws --version
 <span class="cm"># Output example:</span>
 aws-cli/<span class="gr">2.15.0</span> Python/<span class="gr">3.11.6</span> Darwin/23.0.0 exe/x86_64
-<span class="cm"># If you see aws-cli/1.x.x → upgrade required</span></pre>
-      </div>
+<span class="cm"># If you see aws-cli/1.x.x → upgrade required before proceeding</span></pre>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 5 — SSO Setup Steps -->
+<!-- ═══ SLIDE 5 — SSO Setup Steps ═══ -->
 <div class="slide" id="s5">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">01 · IAM IDENTITY CENTER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Step-by-Step Configuration</div>
-    <div class="s-title">🛠️ Configure <span>SSO via CLI</span></div>
-    <div class="two-col" style="margin-top:.5rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">01 · IAM IDENTITY CENTER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Step-by-Step Configuration</div>
+    <div class="sh">🛠️ Configure <span>SSO via CLI</span></div>
+    <div class="row">
       <div class="col">
-        <div class="step-list">
-          <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>Run setup command</h4><p><code>aws configure sso</code> — starts the interactive wizard</p></div></div>
-          <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>Fill in prompts</h4><p>Session name: <code>ips</code> · Start URL · Region: <code>ca-central-1</code> · Scopes: <code>sso:account:access</code></p></div></div>
-          <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>🌐 Browser authorization</h4><p>Browser opens → sign in to portal → approve the request. Copy URL manually if browser doesn't open.</p></div></div>
-          <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>Select account + role</h4><p>Choose the AWS account and IAM role to assume from the available options.</p></div></div>
-          <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>Set defaults</h4><p>Region: <code>ca-central-1</code> · Format: <code>json</code> · Profile name: <code>dev</code></p></div></div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div><h4>Run setup command</h4><p><code>aws configure sso</code> — starts the interactive wizard</p></div></div>
+          <div class="step"><div class="step-n">2</div><div><h4>Fill in prompts</h4><p>Session name: <code>ips</code> · Start URL · Region: <code>ca-central-1</code> · Scopes: <code>sso:account:access</code></p></div></div>
+          <div class="step"><div class="step-n">3</div><div><h4>🌐 Browser authorization</h4><p>Browser opens → sign in to portal → approve the request. Copy URL manually if browser doesn't open.</p></div></div>
+          <div class="step"><div class="step-n">4</div><div><h4>Select account + role</h4><p>Choose the AWS account and IAM role to assume from the available options.</p></div></div>
+          <div class="step"><div class="step-n">5</div><div><h4>Set defaults</h4><p>Region: <code>ca-central-1</code> · Format: <code>json</code> · Profile name: <code>dev</code></p></div></div>
         </div>
       </div>
       <div class="col">
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — SSO Setup</span></div>
+        <div class="code" style="flex:1;">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — SSO Setup</span></div>
           <pre><span class="cm"># Step 1: Run wizard</span>
 aws configure sso
 
-<span class="cm"># Step 2: Prompts</span>
+<span class="cm"># Step 2: Prompts (enter these values)</span>
 SSO session name: <span class="str">ips</span>
 SSO start URL: <span class="str">https://d-9d677c6f3a.awsapps.com/start</span>
 SSO region: <span class="str">ca-central-1</span>
@@ -314,19 +327,16 @@ aws sts get-caller-identity --profile dev</pre>
   </div>
 </div>
 
-<!-- SLIDE 6 — SSO Profile & Troubleshoot -->
+<!-- ═══ SLIDE 6 — Session Mgmt & Troubleshoot ═══ -->
 <div class="slide" id="s6">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">01 · IAM IDENTITY CENTER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Daily Usage &amp; Troubleshooting</div>
-    <div class="s-title">🔁 Session Management &amp; <span>Troubleshooting</span></div>
-    <div class="two-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">01 · IAM IDENTITY CENTER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Daily Usage &amp; Troubleshooting</div>
+    <div class="sh">🔁 Session Management &amp; <span>Troubleshooting</span></div>
+    <div class="row">
       <div class="col">
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH / CMD / PowerShell</span></div>
+        <div class="code" style="flex:1;">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH / CMD / PowerShell</span></div>
           <pre><span class="cm"># Re-login when session expires</span>
 aws sso login --profile dev
 
@@ -344,22 +354,19 @@ aws sts get-caller-identity</pre>
         </div>
       </div>
       <div class="col">
-        <div class="card accent-l red"><h4>🚫 aws: command not found</h4><p>Install AWS CLI v2 and re-open your terminal. Ensure the install path is in <code style="color:var(--muted)">$PATH</code>.</p></div>
-        <div class="card accent-l red"><h4>🌐 Browser doesn't open</h4><p>Copy the URL shown in terminal and paste it manually into your browser to complete authorization.</p></div>
-        <div class="card accent-l red"><h4>🔑 Error loading SSO Token</h4><p>Run: <code style="color:var(--green)">aws sso login --profile dev</code> to refresh your expired session token.</p></div>
-        <div class="card accent-l red"><h4>👤 Profile not found</h4><p>Check <code style="color:var(--muted)">~/.aws/config</code> and confirm you're using the exact profile name: <code style="color:var(--green)">dev</code>.</p></div>
+        <div class="card al red"><h4>🚫 aws: command not found</h4><p>Install AWS CLI v2 and re-open your terminal. Ensure the install path is in <code style="color:var(--muted)">$PATH</code>.</p></div>
+        <div class="card al red"><h4>🌐 Browser doesn't open</h4><p>Copy the URL shown in terminal and paste it manually into your browser to complete authorization.</p></div>
+        <div class="card al red"><h4>🔑 Error loading SSO Token</h4><p>Run: <code style="color:var(--green)">aws sso login --profile dev</code> to refresh your expired session token.</p></div>
+        <div class="card al red"><h4>👤 Profile not found</h4><p>Check <code>~/.aws/config</code> and confirm you're using the exact profile name: <code style="color:var(--green)">dev</code>.</p></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 7 — SECTION: REMOVING BASTION -->
-<div class="slide section-divider" id="s7">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 02</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 7 — SECTION 02 ═══ -->
+<div class="slide sec-div" id="s7">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 02</div></div></div>
+  <div class="body">
     <div class="sd-num">02</div>
     <div class="sd-tag">Security Architecture</div>
     <div class="sd-title">🏰 Removing<br>Bastion Hosts</div>
@@ -367,50 +374,38 @@ aws sts get-caller-identity</pre>
   </div>
 </div>
 
-<!-- SLIDE 8 — What is a Bastion Host -->
+<!-- ═══ SLIDE 8 — What is a Bastion ═══ -->
 <div class="slide" id="s8">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">02 · BASTION HOSTS</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Traditional Architecture</div>
-    <div class="s-title">🏰 What Is a <span>Bastion Host</span>?</div>
-    <div class="two-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">02 · BASTION HOSTS</div></div></div>
+  <div class="body slim">
+    <div class="stag">Traditional Architecture</div>
+    <div class="sh">🏰 What Is a <span>Bastion Host</span>?</div>
+    <div class="row">
       <div class="col">
-        <div class="hl-box">
-          <h4>📖 Definition</h4>
-          <p>A bastion host (jump server) is a hardened EC2 instance in a public subnet that acts as the <strong style="color:var(--text)">only entry point</strong> into private instances via SSH/RDP. Engineers SSH into bastion first, then hop to private servers.</p>
-        </div>
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Traditional Access Pattern</span></div>
+        <div class="hl"><h4>📖 Definition</h4><p>A bastion host (jump server) is a hardened EC2 instance in a public subnet that acts as the <strong style="color:var(--text)">only entry point</strong> into private instances via SSH/RDP. Engineers SSH into bastion first, then hop to private servers.</p></div>
+        <div class="code">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Traditional Access Pattern</span></div>
           <pre><span class="cm"># Engineer's laptop → Bastion → Private EC2</span>
 ssh -i key.pem ec2-user@<span class="str">BASTION_PUBLIC_IP</span>
 <span class="cm"># (now on bastion)</span>
 ssh -i key.pem ec2-user@<span class="str">10.0.1.45</span>
 <span class="cm"># Multiple hops, multiple keys to manage</span></pre>
         </div>
-        <div class="card accent-l red">
-          <h4>⚠️ Architecture Requirements</h4>
-          <ul>
-            <li>Bastion in public subnet with Elastic IP</li>
-            <li>Security group: port 22 open to 0.0.0.0/0 or office IPs</li>
-            <li>Private instances: port 22 open to bastion SG</li>
-            <li>SSH keys distributed to all engineers</li>
-          </ul>
-        </div>
+        <div class="card al red"><h4>⚠️ Architecture Requirements</h4><ul><li>Bastion in public subnet with Elastic IP</li><li>Security group: port 22 open to 0.0.0.0/0 or office IPs</li><li>Private instances: port 22 open to bastion SG</li><li>SSH keys distributed to all engineers</li></ul></div>
       </div>
-      <div class="col">
-        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem;">
-          <p style="font-size:.7rem;color:var(--muted);text-align:center;margin-bottom:.75rem;">Traditional Bastion Architecture</p>
-          <div class="arch-layer"><div class="arch-node" style="border-color:#4FC3F7;color:#4FC3F7;">🌍 Internet</div></div>
-          <div class="arch-vert"><div class="arch-line"></div><span>Port 22</span><div class="arch-line"></div></div>
-          <div class="arch-layer"><div class="arch-node" style="border-color:var(--aws-orange);color:var(--aws-orange);">🏰 Bastion Host<br><small style="font-size:.6rem;color:var(--muted)">Public Subnet · EIP</small></div></div>
-          <div class="arch-vert"><div class="arch-line"></div><span>Port 22</span><div class="arch-line"></div></div>
-          <div class="arch-layer" style="gap:1rem;">
-            <div class="arch-node" style="border-color:var(--muted);color:var(--muted);">🖥️ EC2 A<br><small style="font-size:.6rem;">Private</small></div>
-            <div class="arch-node" style="border-color:var(--muted);color:var(--muted);">🖥️ EC2 B<br><small style="font-size:.6rem;">Private</small></div>
-            <div class="arch-node" style="border-color:var(--muted);color:var(--muted);">🖥️ EC2 C<br><small style="font-size:.6rem;">Private</small></div>
+      <div class="col" style="max-width:340px;">
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1.2rem;flex:1;display:flex;flex-direction:column;gap:.5rem;align-items:center;">
+          <p style="font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:.4rem;">Traditional Bastion Architecture</p>
+          <div class="arch">
+            <div class="arch-row"><div class="anode" style="border-color:#4FC3F7;color:#4FC3F7;">🌍 Internet</div></div>
+            <div class="aline"></div><div class="alabel">Port 22 (public)</div><div class="aline"></div>
+            <div class="arch-row"><div class="anode" style="border-color:var(--aws-orange);color:var(--aws-orange);">🏰 Bastion Host<br><small style="font-size:.7rem;color:var(--muted)">Public Subnet · EIP</small></div></div>
+            <div class="aline"></div><div class="alabel">Port 22 (internal)</div><div class="aline"></div>
+            <div class="arch-row" style="gap:.75rem;">
+              <div class="anode" style="border-color:var(--muted);color:var(--muted);">🖥️ EC2 A<br><small style="font-size:.68rem;">Private</small></div>
+              <div class="anode" style="border-color:var(--muted);color:var(--muted);">🖥️ EC2 B<br><small style="font-size:.68rem;">Private</small></div>
+              <div class="anode" style="border-color:var(--muted);color:var(--muted);">🖥️ EC2 C<br><small style="font-size:.68rem;">Private</small></div>
+            </div>
           </div>
         </div>
       </div>
@@ -418,43 +413,28 @@ ssh -i key.pem ec2-user@<span class="str">10.0.1.45</span>
   </div>
 </div>
 
-<!-- SLIDE 9 — Problems with Bastion -->
+<!-- ═══ SLIDE 9 — Problems with Bastion ═══ -->
 <div class="slide" id="s9">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">02 · BASTION HOSTS</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Why Bastions Are a Problem</div>
-    <div class="s-title">❌ The <span>Hidden Costs</span> of Bastion Hosts</div>
-    <div class="three-col" style="margin-top:.6rem;">
-      <div class="col">
-        <div class="card accent-l red">
-          <h4>🔓 Security Risks</h4>
-          <ul><li>Port 22 publicly exposed</li><li>Brute force / CVE attack surface</li><li>SSH keys on engineer laptops</li><li>Leaked keys = permanent access</li><li>No session recording built-in</li><li>Hard to enforce MFA</li></ul>
-        </div>
-        <div class="card accent-l red">
-          <h4>🕵️ Audit Blind Spots</h4>
-          <ul><li>Who ran what command? Unknown.</li><li>SSH sessions not recorded</li><li>No CloudTrail for SSH activity</li><li>Compliance frameworks require logs</li></ul>
-        </div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">02 · BASTION HOSTS</div></div></div>
+  <div class="body slim">
+    <div class="stag">Why Bastions Are a Problem</div>
+    <div class="sh">❌ The <span>Hidden Costs</span> of Bastion Hosts</div>
+    <div class="grid3">
+      <div class="col" style="gap:.75rem;">
+        <div class="card al red"><h4>🔓 Security Risks</h4><ul><li>Port 22 publicly exposed</li><li>Brute force / CVE attack surface</li><li>SSH keys on engineer laptops</li><li>Leaked keys = permanent access</li><li>No session recording built-in</li><li>Hard to enforce MFA</li></ul></div>
+        <div class="card al red"><h4>🕵️ Audit Blind Spots</h4><ul><li>Who ran what command? Unknown.</li><li>SSH sessions not recorded</li><li>No CloudTrail for SSH activity</li><li>Compliance frameworks require logs</li></ul></div>
+      </div>
+      <div class="col" style="gap:.75rem;">
+        <div class="card al"><h4>💸 Operational Overhead</h4><ul><li>EC2 instance cost 24/7</li><li>OS patching responsibility</li><li>Key distribution to new team members</li><li>Key revocation when staff leave</li><li>Bastion HA / failover setup</li></ul></div>
+        <div class="card al"><h4>📏 Scalability Issues</h4><ul><li>Multiple regions = multiple bastions</li><li>Multi-account = complex peering</li><li>Can become a bottleneck</li></ul></div>
       </div>
       <div class="col">
-        <div class="card accent-l">
-          <h4>💸 Operational Overhead</h4>
-          <ul><li>EC2 instance cost 24/7</li><li>OS patching responsibility</li><li>Key distribution to new team members</li><li>Key revocation when staff leave</li><li>Key rotation processes</li><li>Bastion HA / failover setup</li></ul>
-        </div>
-        <div class="card accent-l">
-          <h4>📏 Scalability Issues</h4>
-          <ul><li>Multiple regions = multiple bastions</li><li>Multi-account = complex peering</li><li>Can become a bottleneck</li></ul>
-        </div>
-      </div>
-      <div class="col">
-        <div style="background:var(--card2);border:1px solid var(--red);border-radius:10px;padding:1rem;">
-          <p style="font-size:.7rem;font-weight:700;color:var(--red);margin-bottom:.6rem;">⚠️ Real-World Attack Scenarios</p>
-          <div class="step-list">
-            <div class="step-item" style="background:rgba(255,82,82,.08)"><div class="step-num" style="background:var(--red)">!</div><div class="step-content"><h4>Key Leak via Git</h4><p>Dev accidentally commits <code>.pem</code> file. Attacker gains permanent SSH access.</p></div></div>
-            <div class="step-item" style="background:rgba(255,82,82,.08)"><div class="step-num" style="background:var(--red)">!</div><div class="step-content"><h4>Departing Employee</h4><p>Employee leaves. SSH key on their laptop still works until manually revoked.</p></div></div>
-            <div class="step-item" style="background:rgba(255,82,82,.08)"><div class="step-num" style="background:var(--red)">!</div><div class="step-content"><h4>CVE on Bastion</h4><p>Unpatched OpenSSH vulnerability → bastion compromised → all private instances exposed.</p></div></div>
+        <div style="background:var(--card2);border:1px solid var(--red);border-radius:10px;padding:1rem;flex:1;">
+          <p style="font-size:.82rem;font-weight:700;color:var(--red);margin-bottom:.7rem;">⚠️ Real-World Attack Scenarios</p>
+          <div class="steps">
+            <div class="step" style="background:rgba(255,82,82,.08);"><div class="step-n" style="background:var(--red)">!</div><div><h4>Key Leak via Git</h4><p>Dev accidentally commits <code>.pem</code> file. Attacker gains permanent SSH access.</p></div></div>
+            <div class="step" style="background:rgba(255,82,82,.08);"><div class="step-n" style="background:var(--red)">!</div><div><h4>Departing Employee</h4><p>Employee leaves. SSH key on their laptop still works until manually revoked.</p></div></div>
+            <div class="step" style="background:rgba(255,82,82,.08);"><div class="step-n" style="background:var(--red)">!</div><div><h4>CVE on Bastion</h4><p>Unpatched OpenSSH vulnerability → bastion compromised → all private instances exposed.</p></div></div>
           </div>
         </div>
       </div>
@@ -462,33 +442,32 @@ ssh -i key.pem ec2-user@<span class="str">10.0.1.45</span>
   </div>
 </div>
 
-<!-- SLIDE 10 — SSM Replaces Bastion -->
+<!-- ═══ SLIDE 10 — SSM Replaces Bastion ═══ -->
 <div class="slide" id="s10">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">02 · BASTION HOSTS</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">The SSM Solution</div>
-    <div class="s-title">✅ SSM <span>Replaces</span> Bastion Hosts</div>
-    <div class="two-col" style="margin-top:.5rem;">
-      <div class="col">
-        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem;">
-          <p style="font-size:.7rem;color:var(--green);font-weight:700;text-align:center;margin-bottom:.75rem;">✅ SSM Session Manager Architecture</p>
-          <div class="arch-layer"><div class="arch-node" style="border-color:#4FC3F7;color:#4FC3F7;">👤 Engineer Laptop</div></div>
-          <div class="arch-vert"><div class="arch-line"></div><span style="color:var(--green)">HTTPS 443</span><div class="arch-line"></div></div>
-          <div class="arch-layer"><div class="arch-node" style="border-color:var(--aws-orange);color:var(--aws-orange);">☁️ SSM Service + IAM Auth<br><small style="font-size:.6rem;color:var(--muted)">AWS Control Plane</small></div></div>
-          <div class="arch-vert"><div class="arch-line"></div><span style="color:var(--green)">TLS Encrypted</span><div class="arch-line"></div></div>
-          <div class="arch-layer" style="gap:1rem;">
-            <div class="arch-node" style="border-color:var(--green);color:var(--green);">🖥️ EC2 A<br><small style="font-size:.6rem;">Private · Agent</small></div>
-            <div class="arch-node" style="border-color:var(--green);color:var(--green);">🖥️ EC2 B<br><small style="font-size:.6rem;">Private · Agent</small></div>
-            <div class="arch-node" style="border-color:var(--green);color:var(--green);">🖥️ EC2 C<br><small style="font-size:.6rem;">Private · Agent</small></div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">02 · BASTION HOSTS</div></div></div>
+  <div class="body slim">
+    <div class="stag">The SSM Solution</div>
+    <div class="sh">✅ SSM <span>Replaces</span> Bastion Hosts</div>
+    <div class="row">
+      <div class="col" style="max-width:320px;">
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1.2rem;flex:1;display:flex;flex-direction:column;align-items:center;gap:.4rem;">
+          <p style="font-size:.8rem;color:var(--green);font-weight:700;text-align:center;margin-bottom:.4rem;">✅ SSM Session Manager Architecture</p>
+          <div class="arch">
+            <div class="arch-row"><div class="anode" style="border-color:#4FC3F7;color:#4FC3F7;">👤 Engineer Laptop</div></div>
+            <div class="aline"></div><div class="alabel" style="color:var(--green)">HTTPS 443</div><div class="aline"></div>
+            <div class="arch-row"><div class="anode" style="border-color:var(--aws-orange);color:var(--aws-orange);">☁️ SSM Service + IAM Auth<br><small style="font-size:.7rem;color:var(--muted)">AWS Control Plane</small></div></div>
+            <div class="aline"></div><div class="alabel" style="color:var(--green)">TLS Encrypted</div><div class="aline"></div>
+            <div class="arch-row" style="gap:.75rem;">
+              <div class="anode" style="border-color:var(--green);color:var(--green);">🖥️ EC2 A<br><small style="font-size:.68rem;">Private</small></div>
+              <div class="anode" style="border-color:var(--green);color:var(--green);">🖥️ EC2 B<br><small style="font-size:.68rem;">Private</small></div>
+              <div class="anode" style="border-color:var(--green);color:var(--green);">🖥️ EC2 C<br><small style="font-size:.68rem;">Private</small></div>
+            </div>
           </div>
-          <p style="font-size:.62rem;color:var(--green);text-align:center;margin-top:.6rem;">🚫 No port 22 · No bastion · No SSH keys</p>
+          <p style="font-size:.75rem;color:var(--green);text-align:center;margin-top:.4rem;">🚫 No port 22 · No bastion · No SSH keys</p>
         </div>
       </div>
       <div class="col">
-        <div style="overflow-x:auto;">
+        <div style="overflow-x:auto;flex:1;">
           <table class="tbl">
             <thead><tr><th>Aspect</th><th>Bastion</th><th>SSM</th></tr></thead>
             <tbody>
@@ -500,11 +479,12 @@ ssh -i key.pem ec2-user@<span class="str">10.0.1.45</span>
               <tr><td>MFA enforcement</td><td class="cx">✗ Complex</td><td class="ck">✓ Via IAM</td></tr>
               <tr><td>Audit trail</td><td class="cx">✗ None</td><td class="ck">✓ CloudTrail</td></tr>
               <tr><td>Multi-account</td><td class="cx">✗ Complex</td><td class="ck">✓ Native</td></tr>
+              <tr><td>Hybrid/on-prem</td><td class="cx">✗ VPN needed</td><td class="ck">✓ SSM Agent</td></tr>
             </tbody>
           </table>
         </div>
-        <div class="code-wrap" style="margin-top:.5rem;">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Connect without SSH</span></div>
+        <div class="code">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Connect without SSH</span></div>
           <pre><span class="cm"># No keys, no bastion, no port 22</span>
 aws ssm start-session \
   --target <span class="str">i-0abc123def456</span> \
@@ -515,13 +495,10 @@ aws ssm start-session \
   </div>
 </div>
 
-<!-- SLIDE 11 — SECTION: SESSION MANAGER -->
-<div class="slide section-divider" id="s11">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 03</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 11 — SECTION 03 ═══ -->
+<div class="slide sec-div" id="s11">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 03</div></div></div>
+  <div class="body">
     <div class="sd-num">03</div>
     <div class="sd-tag">Deep Dive</div>
     <div class="sd-title">🖥️ Session Manager</div>
@@ -529,177 +506,147 @@ aws ssm start-session \
   </div>
 </div>
 
-<!-- SLIDE 12 — SSM Architecture Overview (NEW DIAGRAM SLIDE) -->
+<!-- ═══ SLIDE 12 — SSM Architecture Diagram (NEW) ═══ -->
 <div class="slide" id="s12">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">03 · SESSION MANAGER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Architecture Diagram</div>
-    <div class="s-title">🗺️ SSM Capabilities — <span>How They Fit Together</span></div>
-    <div style="margin-top:.5rem;flex:1;display:flex;flex-direction:column;overflow:hidden;">
-      <svg width="100%" viewBox="0 0 760 390" style="flex:1;max-height:100%;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">03 · SESSION MANAGER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Architecture Diagram</div>
+    <div class="sh">🗺️ SSM Capabilities — <span>How They Fit Together</span></div>
+    <div style="flex:1;min-height:0;display:flex;align-items:stretch;">
+      <svg width="100%" height="100%" viewBox="0 0 900 440" preserveAspectRatio="xMidYMid meet" style="display:block;">
         <defs>
-          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
         </defs>
 
-        <!-- ── USER / ENGINEER ── -->
-        <rect x="10" y="155" width="110" height="48" rx="8" fill="rgba(79,195,247,.12)" stroke="#4FC3F7" stroke-width="1"/>
-        <text x="65" y="174" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#4FC3F7">👤 Engineer</text>
-        <text x="65" y="191" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">CLI / Console</text>
+        <!-- USER -->
+        <rect x="12" y="170" width="130" height="52" rx="8" fill="rgba(79,195,247,.12)" stroke="#4FC3F7" stroke-width="1.2"/>
+        <text x="77" y="191" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#4FC3F7">👤 Engineer</text>
+        <text x="77" y="211" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">CLI / Console</text>
 
-        <!-- ── IAM + STS ── -->
-        <rect x="10" y="30" width="110" height="48" rx="8" fill="rgba(124,77,255,.12)" stroke="#7C4DFF" stroke-width="1"/>
-        <text x="65" y="49" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#7C4DFF">🔐 IAM + STS</text>
-        <text x="65" y="66" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">Auth &amp; Roles</text>
+        <!-- IAM -->
+        <rect x="12" y="30" width="130" height="52" rx="8" fill="rgba(124,77,255,.12)" stroke="#7C4DFF" stroke-width="1.2"/>
+        <text x="77" y="51" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#7C4DFF">🔐 IAM + STS</text>
+        <text x="77" y="71" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Auth &amp; Roles</text>
 
-        <!-- Arrow: Engineer → IAM -->
-        <line x1="65" y1="155" x2="65" y2="82" stroke="#7C4DFF" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
-        <text x="75" y="122" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">verify</text>
+        <!-- IAM arrow -->
+        <line x1="77" y1="170" x2="77" y2="86" stroke="#7C4DFF" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#a)"/>
+        <text x="88" y="132" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">verify</text>
 
-        <!-- ── SSM SERVICE (central box) ── -->
-        <rect x="170" y="10" width="240" height="350" rx="14" fill="rgba(255,153,0,.05)" stroke="rgba(255,153,0,.4)" stroke-width="1.5" stroke-dasharray="6 3"/>
-        <text x="290" y="35" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#FF9900">☁️ AWS Systems Manager</text>
-        <text x="290" y="52" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Control Plane · ca-central-1</text>
+        <!-- SSM CONTAINER -->
+        <rect x="190" y="12" width="310" height="416" rx="14" fill="rgba(255,153,0,.04)" stroke="rgba(255,153,0,.4)" stroke-width="1.5" stroke-dasharray="7 3"/>
+        <text x="345" y="38" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#FF9900">☁️ AWS Systems Manager</text>
+        <text x="345" y="58" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Control Plane · ca-central-1</text>
 
-        <!-- Session Manager box -->
-        <rect x="185" y="68" width="210" height="72" rx="8" fill="rgba(0,200,83,.1)" stroke="#00C853" stroke-width="1"/>
-        <text x="290" y="89" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#00C853">🖥️ Session Manager</text>
-        <text x="290" y="107" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Interactive shell · Port forwarding</text>
-        <text x="290" y="122" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">No SSH keys · No port 22</text>
+        <!-- Session Manager -->
+        <rect x="208" y="76" width="274" height="88" rx="8" fill="rgba(0,200,83,.1)" stroke="#00C853" stroke-width="1.2"/>
+        <text x="345" y="101" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#00C853">🖥️ Session Manager</text>
+        <text x="345" y="122" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Interactive shell · Port forwarding</text>
+        <text x="345" y="140" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">No SSH keys · No port 22 · Audit logged</text>
 
-        <!-- Run Command box -->
-        <rect x="185" y="158" width="210" height="72" rx="8" fill="rgba(255,153,0,.1)" stroke="#FF9900" stroke-width="1"/>
-        <text x="290" y="179" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#FF9900">▶️ Run Command</text>
-        <text x="290" y="197" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Ad-hoc fleet execution</text>
-        <text x="290" y="212" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Tag-based targeting · Rate controls</text>
+        <!-- Run Command -->
+        <rect x="208" y="182" width="274" height="88" rx="8" fill="rgba(255,153,0,.1)" stroke="#FF9900" stroke-width="1.2"/>
+        <text x="345" y="207" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#FF9900">▶️ Run Command</text>
+        <text x="345" y="228" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Ad-hoc fleet execution · One-time</text>
+        <text x="345" y="246" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Tag-based targeting · Rate controls</text>
 
-        <!-- State Manager box -->
-        <rect x="185" y="248" width="210" height="72" rx="8" fill="rgba(124,77,255,.1)" stroke="#7C4DFF" stroke-width="1"/>
-        <text x="290" y="269" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#7C4DFF">🔄 State Manager</text>
-        <text x="290" y="287" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Continuous drift correction</text>
-        <text x="290" y="302" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Scheduled associations · Compliance</text>
+        <!-- State Manager -->
+        <rect x="208" y="288" width="274" height="88" rx="8" fill="rgba(124,77,255,.1)" stroke="#7C4DFF" stroke-width="1.2"/>
+        <text x="345" y="313" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#7C4DFF">🔄 State Manager</text>
+        <text x="345" y="334" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Continuous drift correction · Scheduled</text>
+        <text x="345" y="352" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Associations · Compliance reporting</text>
 
-        <!-- ── Engineer → SSM (HTTPS) ── -->
-        <line x1="120" y1="179" x2="170" y2="179" stroke="#FF9900" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text x="140" y="172" font-family="'Segoe UI',sans-serif" font-size="9" fill="#FF9900" text-anchor="middle">HTTPS</text>
+        <!-- Param Store footer -->
+        <rect x="208" y="392" width="274" height="26" rx="6" fill="rgba(79,195,247,.07)" stroke="rgba(79,195,247,.25)" stroke-width="1"/>
+        <text x="345" y="409" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#4FC3F7">🗄️ Parameter Store — secrets injected at runtime by all three</text>
 
-        <!-- ── MANAGED INSTANCES ── -->
-        <rect x="460" y="10" width="140" height="370" rx="14" fill="rgba(79,195,247,.05)" stroke="rgba(79,195,247,.3)" stroke-width="1" stroke-dasharray="5 3"/>
-        <text x="530" y="34" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#4FC3F7">Managed Instances</text>
-        <text x="530" y="50" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">SSM Agent + IAM Role</text>
+        <!-- Engineer → SSM -->
+        <line x1="142" y1="196" x2="188" y2="196" stroke="#FF9900" stroke-width="1.8" marker-end="url(#a)"/>
+        <text x="165" y="188" font-family="'Segoe UI',sans-serif" font-size="10" fill="#FF9900" text-anchor="middle">HTTPS</text>
 
-        <!-- EC2 instances -->
-        <rect x="475" y="68" width="110" height="38" rx="6" fill="rgba(79,195,247,.1)" stroke="#4FC3F7" stroke-width=".8"/>
-        <text x="530" y="83" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#4FC3F7">🖥️ EC2 (Linux)</text>
-        <text x="530" y="98" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Private subnet</text>
+        <!-- INSTANCES CONTAINER -->
+        <rect x="550" y="12" width="170" height="416" rx="14" fill="rgba(79,195,247,.04)" stroke="rgba(79,195,247,.3)" stroke-width="1" stroke-dasharray="5 3"/>
+        <text x="635" y="38" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#4FC3F7">Managed Instances</text>
+        <text x="635" y="56" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">SSM Agent + IAM Role</text>
 
-        <rect x="475" y="122" width="110" height="38" rx="6" fill="rgba(79,195,247,.1)" stroke="#4FC3F7" stroke-width=".8"/>
-        <text x="530" y="137" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#4FC3F7">🖥️ EC2 (Windows)</text>
-        <text x="530" y="152" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Private subnet</text>
+        <rect x="567" y="78" width="136" height="44" rx="7" fill="rgba(79,195,247,.1)" stroke="#4FC3F7" stroke-width="1"/>
+        <text x="635" y="96" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#4FC3F7">🖥️ EC2 Linux</text>
+        <text x="635" y="113" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Private subnet</text>
 
-        <rect x="475" y="176" width="110" height="38" rx="6" fill="rgba(79,195,247,.08)" stroke="#4FC3F7" stroke-width=".8"/>
-        <text x="530" y="191" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#4FC3F7">🌐 On-Prem Server</text>
-        <text x="530" y="206" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Hybrid activation</text>
+        <rect x="567" y="142" width="136" height="44" rx="7" fill="rgba(79,195,247,.1)" stroke="#4FC3F7" stroke-width="1"/>
+        <text x="635" y="160" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#4FC3F7">🖥️ EC2 Windows</text>
+        <text x="635" y="177" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Private subnet</text>
 
-        <!-- SSM → Instances arrows (one per capability) -->
-        <!-- Session Manager → EC2 Linux -->
-        <line x1="395" y1="104" x2="473" y2="87" stroke="#00C853" stroke-width="1.3" marker-end="url(#arr)"/>
-        <!-- Run Command → EC2 Windows -->
-        <line x1="395" y1="194" x2="473" y2="141" stroke="#FF9900" stroke-width="1.3" marker-end="url(#arr)"/>
-        <!-- State Manager → all (fan) -->
-        <line x1="395" y1="284" x2="473" y2="105" stroke="#7C4DFF" stroke-width=".8" stroke-dasharray="4 2" marker-end="url(#arr)"/>
-        <line x1="395" y1="284" x2="473" y2="159" stroke="#7C4DFF" stroke-width=".8" stroke-dasharray="4 2" marker-end="url(#arr)"/>
-        <line x1="395" y1="284" x2="473" y2="195" stroke="#7C4DFF" stroke-width=".8" stroke-dasharray="4 2" marker-end="url(#arr)"/>
+        <rect x="567" y="206" width="136" height="44" rx="7" fill="rgba(79,195,247,.08)" stroke="#4FC3F7" stroke-width=".8"/>
+        <text x="635" y="224" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#4FC3F7">🌐 On-Prem Server</text>
+        <text x="635" y="241" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8B949E">Hybrid activation</text>
 
-        <!-- ── AUDIT / LOGGING ── -->
-        <rect x="620" y="68" width="130" height="200" rx="12" fill="rgba(255,153,0,.04)" stroke="rgba(255,153,0,.25)" stroke-width="1" stroke-dasharray="4 3"/>
-        <text x="685" y="90" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" font-weight="700" fill="#FF9900">📋 Audit &amp; Logs</text>
+        <!-- Capability → Instance arrows -->
+        <line x1="482" y1="120" x2="565" y2="100" stroke="#00C853" stroke-width="1.5" marker-end="url(#a)"/>
+        <line x1="482" y1="226" x2="565" y2="164" stroke="#FF9900" stroke-width="1.5" marker-end="url(#a)"/>
+        <line x1="482" y1="332" x2="565" y2="100" stroke="#7C4DFF" stroke-width=".9" stroke-dasharray="5 2" marker-end="url(#a)"/>
+        <line x1="482" y1="332" x2="565" y2="164" stroke="#7C4DFF" stroke-width=".9" stroke-dasharray="5 2" marker-end="url(#a)"/>
+        <line x1="482" y1="332" x2="565" y2="228" stroke="#7C4DFF" stroke-width=".9" stroke-dasharray="5 2" marker-end="url(#a)"/>
 
-        <rect x="630" y="102" width="110" height="34" rx="6" fill="rgba(255,153,0,.1)" stroke="rgba(255,153,0,.3)" stroke-width=".8"/>
-        <text x="685" y="117" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" font-weight="700" fill="#FF9900">CloudTrail</text>
-        <text x="685" y="130" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">API events</text>
+        <!-- AUDIT CONTAINER -->
+        <rect x="762" y="70" width="128" height="230" rx="12" fill="rgba(255,153,0,.04)" stroke="rgba(255,153,0,.25)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="826" y="94" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#FF9900">📋 Audit</text>
 
-        <rect x="630" y="146" width="110" height="34" rx="6" fill="rgba(0,200,83,.08)" stroke="rgba(0,200,83,.25)" stroke-width=".8"/>
-        <text x="685" y="161" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" font-weight="700" fill="#00C853">S3 Bucket</text>
-        <text x="685" y="175" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Full session I/O</text>
+        <rect x="772" y="108" width="108" height="38" rx="6" fill="rgba(255,153,0,.1)" stroke="rgba(255,153,0,.3)" stroke-width=".8"/>
+        <text x="826" y="124" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#FF9900">CloudTrail</text>
+        <text x="826" y="139" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">API events</text>
 
-        <rect x="630" y="190" width="110" height="34" rx="6" fill="rgba(124,77,255,.08)" stroke="rgba(124,77,255,.25)" stroke-width=".8"/>
-        <text x="685" y="205" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" font-weight="700" fill="#7C4DFF">CloudWatch</text>
-        <text x="685" y="219" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Real-time logs</text>
+        <rect x="772" y="158" width="108" height="38" rx="6" fill="rgba(0,200,83,.08)" stroke="rgba(0,200,83,.25)" stroke-width=".8"/>
+        <text x="826" y="174" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#00C853">S3 Bucket</text>
+        <text x="826" y="189" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">Full session I/O</text>
 
-        <!-- Session Manager → S3/CW -->
-        <line x1="600" y1="104" x2="628" y2="119" stroke="#00C853" stroke-width=".8" stroke-dasharray="3 2" marker-end="url(#arr)"/>
-        <line x1="600" y1="104" x2="628" y2="207" stroke="#00C853" stroke-width=".8" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+        <rect x="772" y="208" width="108" height="38" rx="6" fill="rgba(124,77,255,.08)" stroke="rgba(124,77,255,.25)" stroke-width=".8"/>
+        <text x="826" y="224" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="11" font-weight="700" fill="#7C4DFF">CloudWatch</text>
+        <text x="826" y="239" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">Real-time logs</text>
 
-        <!-- ── LEGEND ── -->
-        <line x1="170" y1="358" x2="200" y2="358" stroke="#00C853" stroke-width="1.5"/>
-        <text x="205" y="362" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Session Mgr</text>
-        <line x1="270" y1="358" x2="300" y2="358" stroke="#FF9900" stroke-width="1.5"/>
-        <text x="305" y="362" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Run Command</text>
-        <line x1="380" y1="358" x2="410" y2="358" stroke="#7C4DFF" stroke-width="1" stroke-dasharray="4 2"/>
-        <text x="415" y="362" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">State Manager</text>
-        <line x1="495" y1="358" x2="525" y2="358" stroke="#8B949E" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="530" y="362" font-family="'Segoe UI',sans-serif" font-size="9" fill="#8B949E">Audit flow</text>
+        <!-- Instance → Audit -->
+        <line x1="703" y1="100" x2="760" y2="127" stroke="#00C853" stroke-width=".9" stroke-dasharray="3 2" marker-end="url(#a)"/>
+        <line x1="703" y1="100" x2="760" y2="177" stroke="#00C853" stroke-width=".9" stroke-dasharray="3 2" marker-end="url(#a)"/>
+        <line x1="703" y1="100" x2="760" y2="227" stroke="#8B949E" stroke-width=".8" stroke-dasharray="3 2" marker-end="url(#a)"/>
 
-        <!-- PARAMETER STORE note -->
-        <rect x="170" y="332" width="240" height="20" rx="4" fill="rgba(79,195,247,.06)" stroke="rgba(79,195,247,.2)" stroke-width=".8"/>
-        <text x="290" y="346" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="9" fill="#4FC3F7">🗄️ Parameter Store: secrets injected at runtime by all three</text>
+        <!-- LEGEND -->
+        <line x1="208" y1="434" x2="238" y2="434" stroke="#00C853" stroke-width="2"/>
+        <text x="244" y="438" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">Session Mgr</text>
+        <line x1="330" y1="434" x2="360" y2="434" stroke="#FF9900" stroke-width="2"/>
+        <text x="366" y="438" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">Run Command</text>
+        <line x1="458" y1="434" x2="488" y2="434" stroke="#7C4DFF" stroke-width="1.5" stroke-dasharray="5 2"/>
+        <text x="494" y="438" font-family="'Segoe UI',sans-serif" font-size="10" fill="#8B949E">State Manager</text>
       </svg>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 13 — Session Manager How It Works -->
+<!-- ═══ SLIDE 13 — How Session Manager Works ═══ -->
 <div class="slide" id="s13">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">03 · SESSION MANAGER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Architecture</div>
-    <div class="s-title">🔄 How <span>Session Manager</span> Works</div>
-    <div style="margin:.6rem 0;">
-      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem;">
-        <div class="flow" style="justify-content:center;gap:.3rem;">
-          <div style="text-align:center;"><div class="flow-box" style="border-color:#4FC3F7;color:#4FC3F7;">👤 User / Admin<br><small style="font-size:.6rem;color:var(--muted)">Console / CLI</small></div></div>
-          <div style="text-align:center;"><div class="flow-arrow">→</div><div style="font-size:.6rem;color:var(--muted)">HTTPS + IAM</div></div>
-          <div style="text-align:center;"><div class="flow-box" style="border-color:var(--aws-orange);color:var(--aws-orange);">☁️ SSM Service<br><small style="font-size:.6rem;color:var(--muted)">AWS Control Plane</small></div></div>
-          <div style="text-align:center;"><div class="flow-arrow">→</div><div style="font-size:.6rem;color:var(--green)">TLS 1.2+ Encrypted</div></div>
-          <div style="text-align:center;"><div class="flow-box" style="border-color:var(--green);color:var(--green);">⚙️ SSM Agent<br><small style="font-size:.6rem;color:var(--muted)">On instance</small></div></div>
-          <div style="text-align:center;"><div class="flow-arrow">→</div><div style="font-size:.6rem;color:var(--blue)">Shell Session</div></div>
-          <div style="text-align:center;"><div class="flow-box" style="border-color:var(--blue);color:var(--blue);">🖥️ EC2 / Server<br><small style="font-size:.6rem;color:var(--muted)">Private subnet OK</small></div></div>
-        </div>
-      </div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">03 · SESSION MANAGER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Architecture</div>
+    <div class="sh">🔄 How <span>Session Manager</span> Works</div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;">
+      <div style="text-align:center;"><div style="background:var(--card);border:1px solid #4FC3F7;border-radius:8px;padding:.6rem 1rem;font-size:.88rem;font-weight:600;color:#4FC3F7;">👤 User / Admin<br><small style="font-size:.75rem;color:var(--muted)">Console / CLI</small></div></div>
+      <div style="text-align:center;color:var(--muted);font-size:1rem;">→<br><span style="font-size:.72rem">HTTPS+IAM</span></div>
+      <div style="text-align:center;"><div style="background:var(--card);border:1px solid var(--aws-orange);border-radius:8px;padding:.6rem 1rem;font-size:.88rem;font-weight:600;color:var(--aws-orange);">☁️ SSM Service<br><small style="font-size:.75rem;color:var(--muted)">AWS Control Plane</small></div></div>
+      <div style="text-align:center;color:var(--muted);font-size:1rem;">→<br><span style="font-size:.72rem;color:var(--green)">TLS 1.2+</span></div>
+      <div style="text-align:center;"><div style="background:var(--card);border:1px solid var(--green);border-radius:8px;padding:.6rem 1rem;font-size:.88rem;font-weight:600;color:var(--green);">⚙️ SSM Agent<br><small style="font-size:.75rem;color:var(--muted)">On instance</small></div></div>
+      <div style="text-align:center;color:var(--muted);font-size:1rem;">→<br><span style="font-size:.72rem;color:var(--blue)">Shell</span></div>
+      <div style="text-align:center;"><div style="background:var(--card);border:1px solid var(--blue);border-radius:8px;padding:.6rem 1rem;font-size:.88rem;font-weight:600;color:var(--blue);">🖥️ EC2 / Server<br><small style="font-size:.75rem;color:var(--muted)">Private subnet OK</small></div></div>
     </div>
-    <div class="two-col">
+    <div class="row">
       <div class="col">
-        <div class="card accent-l green">
-          <h4>✅ Prerequisites on Instance</h4>
-          <ul>
-            <li><strong style="color:var(--text)">SSM Agent</strong> — pre-installed on AL2, AL2023, Windows Server 2008+, Ubuntu 16.04+</li>
-            <li><strong style="color:var(--text)">IAM Role</strong> — attach <code style="color:var(--aws-orange)">AmazonSSMManagedInstanceCore</code></li>
-            <li><strong style="color:var(--text)">Network</strong> — outbound HTTPS 443 to SSM endpoints (or VPC Endpoints)</li>
-          </ul>
-        </div>
-        <div class="card accent-l blue">
-          <h4>✅ Prerequisites for User</h4>
-          <ul>
-            <li>IAM permission: <code style="color:var(--aws-orange)">ssm:StartSession</code></li>
-            <li>IAM permission: <code style="color:var(--aws-orange)">ssm:TerminateSession</code></li>
-            <li>AWS CLI v2 + Session Manager Plugin</li>
-          </ul>
-        </div>
+        <div class="card al green"><h4>✅ Prerequisites on Instance</h4><ul><li><strong style="color:var(--text)">SSM Agent</strong> — pre-installed on AL2, AL2023, Windows Server 2008+, Ubuntu 16.04+</li><li><strong style="color:var(--text)">IAM Role</strong> — attach <code style="color:var(--aws-orange)">AmazonSSMManagedInstanceCore</code></li><li><strong style="color:var(--text)">Network</strong> — outbound HTTPS 443 to SSM endpoints (or VPC Endpoints)</li></ul></div>
+        <div class="card al blue"><h4>✅ Prerequisites for User</h4><ul><li>IAM permission: <code style="color:var(--aws-orange)">ssm:StartSession</code></li><li>IAM permission: <code style="color:var(--aws-orange)">ssm:TerminateSession</code></li><li>AWS CLI v2 + Session Manager Plugin</li></ul></div>
       </div>
       <div class="col">
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Session Manager Commands</span></div>
+        <div class="code" style="flex:1;">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Session Manager Commands</span></div>
           <pre><span class="cm"># Start interactive session</span>
-aws ssm start-session \
-  --target <span class="str">i-0abc123def456</span>
+aws ssm start-session --target <span class="str">i-0abc123def456</span>
 
 <span class="cm"># Port forwarding to RDS (no VPN!)</span>
 aws ssm start-session \
@@ -718,89 +665,65 @@ aws ssm start-session \
   </div>
 </div>
 
-<!-- SLIDE 14 — Session Manager Logging -->
+<!-- ═══ SLIDE 14 — Session Manager Logging ═══ -->
 <div class="slide" id="s14">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">03 · SESSION MANAGER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Audit &amp; Compliance</div>
-    <div class="s-title">📜 Session <span>Logging &amp; Audit</span></div>
-    <div class="two-col" style="margin-top:.6rem;">
-      <div class="col">
-        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem;">
-          <p style="font-size:.7rem;font-weight:700;color:var(--aws-orange);margin-bottom:.75rem;">Audit Logging Flow</p>
-          <div class="arch-layer"><div class="arch-node" style="border-color:var(--blue);color:var(--blue);">🖥️ Session Start</div></div>
-          <div class="arch-vert"><div class="arch-line"></div></div>
-          <div class="arch-layer" style="gap:.75rem;">
-            <div class="arch-node" style="border-color:var(--aws-orange);color:var(--aws-orange);font-size:.65rem;">📋 CloudTrail<br>API Event</div>
-            <div class="arch-node" style="border-color:var(--green);color:var(--green);font-size:.65rem;">📦 S3 Bucket<br>Full I/O Log</div>
-            <div class="arch-node" style="border-color:var(--purple);color:var(--purple);font-size:.65rem;">📊 CloudWatch<br>Logs</div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">03 · SESSION MANAGER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Audit &amp; Compliance</div>
+    <div class="sh">📜 Session <span>Logging &amp; Audit</span></div>
+    <div class="row">
+      <div class="col" style="max-width:300px;">
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1.2rem;flex:1;display:flex;flex-direction:column;align-items:center;gap:.4rem;">
+          <p style="font-size:.85rem;font-weight:700;color:var(--aws-orange);margin-bottom:.4rem;">Audit Logging Flow</p>
+          <div class="arch">
+            <div class="arch-row"><div class="anode" style="border-color:var(--blue);color:var(--blue);">🖥️ Session Start</div></div>
+            <div class="aline"></div>
+            <div class="arch-row" style="gap:.6rem;">
+              <div class="anode" style="border-color:var(--aws-orange);color:var(--aws-orange);font-size:.75rem;">📋 CloudTrail<br>API Event</div>
+              <div class="anode" style="border-color:var(--green);color:var(--green);font-size:.75rem;">📦 S3 Bucket<br>Full I/O Log</div>
+              <div class="anode" style="border-color:var(--purple);color:var(--purple);font-size:.75rem;">📊 CloudWatch<br>Logs</div>
+            </div>
+            <div class="aline"></div>
+            <div class="arch-row"><div class="anode" style="border-color:var(--muted);color:var(--muted);">🔒 Security Team / SIEM</div></div>
           </div>
-          <div class="arch-vert"><div class="arch-line"></div></div>
-          <div class="arch-layer"><div class="arch-node" style="border-color:var(--muted);color:var(--muted);">🔒 Security Team / SIEM</div></div>
         </div>
       </div>
       <div class="col">
-        <div class="card accent-l green">
-          <h4>📋 What Gets Logged</h4>
-          <ul>
-            <li>Every keystroke and command entered</li>
-            <li>All command output (stdout/stderr)</li>
-            <li>Session start/end timestamps</li>
-            <li>Initiating IAM user/role ARN</li>
-            <li>Target instance ID and region</li>
-            <li>KMS encryption of log data (optional)</li>
-          </ul>
-        </div>
-        <div class="card accent-l blue">
-          <h4>🏛️ Compliance Use Cases</h4>
-          <ul>
-            <li>SOC 2 — evidence of access controls</li>
-            <li>PCI-DSS — session monitoring requirement</li>
-            <li>ISO 27001 — audit trail for privileged access</li>
-            <li>Break-glass access fully recorded</li>
-          </ul>
-        </div>
+        <div class="card al green"><h4>📋 What Gets Logged</h4><ul><li>Every keystroke and command entered</li><li>All command output (stdout/stderr)</li><li>Session start/end timestamps</li><li>Initiating IAM user/role ARN</li><li>Target instance ID and region</li><li>KMS encryption of log data (optional)</li></ul></div>
+        <div class="card al blue"><h4>🏛️ Compliance Use Cases</h4><ul><li>SOC 2 — evidence of access controls</li><li>PCI-DSS — session monitoring requirement</li><li>ISO 27001 — audit trail for privileged access</li><li>Break-glass access fully recorded</li></ul></div>
+        <div class="card al purple"><h4>💡 Use Cases</h4><ul><li>Debug EC2 in private subnets without firewall changes</li><li>DB port forwarding (RDS/Aurora) replacing VPN</li><li>Emergency break-glass access, fully tracked</li><li>Tunnel any TCP port — Elasticsearch, Redis, UIs</li></ul></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 15 — Session Manager Use Cases -->
+<!-- ═══ SLIDE 15 — Session Manager Use Cases ═══ -->
 <div class="slide" id="s15">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">03 · SESSION MANAGER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Use Cases</div>
-    <div class="s-title">💡 Session Manager <span>Use Cases</span></div>
-    <div class="three-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">03 · SESSION MANAGER</div></div></div>
+  <div class="body slim">
+    <div class="stag">Use Cases</div>
+    <div class="sh">💡 Session Manager <span>Use Cases</span></div>
+    <div class="grid3">
       <div class="col">
-        <div class="card top-accent"><div class="icon-md">🔧</div><h4>Debug Private Apps</h4><p>Access EC2 in private subnets to inspect logs, running processes, and app state. No firewall changes needed.</p></div>
-        <div class="card top-accent"><div class="icon-md">🗄️</div><h4>Database Port Forwarding</h4><p>Forward port → RDS/Aurora in private subnet. Connect with your local DB tool (DBeaver, TablePlus) without VPN.</p></div>
+        <div class="card at"><div class="ico">🔧</div><h4>Debug Private Apps</h4><p>Access EC2 in private subnets to inspect logs, running processes, and app state. No firewall changes needed.</p></div>
+        <div class="card at"><div class="ico">🗄️</div><h4>Database Port Forwarding</h4><p>Forward port → RDS/Aurora in private subnet. Connect with your local DB tool (DBeaver, TablePlus) without VPN.</p></div>
       </div>
       <div class="col">
-        <div class="card top-accent blue"><div class="icon-md">🚨</div><h4>Break-Glass Access</h4><p>Emergency production access via IAM role assumption. Fully tracked, time-limited, approved via IAM policy conditions.</p></div>
-        <div class="card top-accent blue"><div class="icon-md">🌍</div><h4>Hybrid / On-Prem</h4><p>Register on-prem servers as managed instances via SSM hybrid activation. Same single pane of glass.</p></div>
+        <div class="card at blue"><div class="ico">🚨</div><h4>Break-Glass Access</h4><p>Emergency production access via IAM role assumption. Fully tracked, time-limited, approved via IAM policy conditions.</p></div>
+        <div class="card at blue"><div class="ico">🌍</div><h4>Hybrid / On-Prem</h4><p>Register on-prem servers as managed instances via SSM hybrid activation. Same single pane of glass.</p></div>
       </div>
       <div class="col">
-        <div class="card top-accent green"><div class="icon-md">🏛️</div><h4>Compliance Access</h4><p>SOC2/PCI auditors require every privileged session to be logged. Session Manager provides the complete evidence.</p></div>
-        <div class="card top-accent green"><div class="icon-md">🔀</div><h4>Tunnel Any Port</h4><p>Tunnel Elasticsearch (9200), Redis (6379), internal web UIs — any TCP port, any private resource, no VPN.</p></div>
+        <div class="card at green"><div class="ico">🏛️</div><h4>Compliance Access</h4><p>SOC2/PCI auditors require every privileged session to be logged. Session Manager provides the complete evidence.</p></div>
+        <div class="card at green"><div class="ico">🔀</div><h4>Tunnel Any Port</h4><p>Tunnel Elasticsearch (9200), Redis (6379), internal web UIs — any TCP port, any private resource, no VPN.</p></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 16 — SECTION: CONFIG MGMT -->
-<div class="slide section-divider" id="s16">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 04</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 16 — SECTION 04 ═══ -->
+<div class="slide sec-div" id="s16">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 04</div></div></div>
+  <div class="body">
     <div class="sd-num">04</div>
     <div class="sd-tag">Configuration Management</div>
     <div class="sd-title">🔧 Ansible, Config Mgmt<br>&amp; SSM State Manager</div>
@@ -808,43 +731,26 @@ aws ssm start-session \
   </div>
 </div>
 
-<!-- SLIDE 17 — What is Config Management -->
+<!-- ═══ SLIDE 17 — What is Config Mgmt ═══ -->
 <div class="slide" id="s17">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">04 · CONFIG MANAGEMENT</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Concepts</div>
-    <div class="s-title">📋 What Is <span>Configuration Management</span>?</div>
-    <div class="two-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">04 · CONFIG MANAGEMENT</div></div></div>
+  <div class="body slim">
+    <div class="stag">Concepts</div>
+    <div class="sh">📋 What Is <span>Configuration Management</span>?</div>
+    <div class="row">
       <div class="col">
-        <div class="hl-box">
-          <h4>📖 The Core Problem</h4>
-          <p>Left unmanaged, servers <strong style="color:var(--text)">drift</strong>. Engineer A manually installs nginx 1.18. Engineer B forgets. Engineer C installs 1.20. Now your fleet has 3 different configs. This is <strong style="color:var(--red)">configuration drift</strong>.</p>
-        </div>
-        <div class="hl-box" style="margin-top:.5rem;background:rgba(0,200,83,.06);border-color:rgba(0,200,83,.25);">
-          <h4 style="color:var(--green)">✅ Solution: Desired State</h4>
-          <p>Configuration Management tools let you declare the <strong style="color:var(--text)">desired state</strong> of a server — "nginx 1.20 installed, port 80 open, firewall enabled" — and continuously enforce it, automatically correcting drift.</p>
-        </div>
-        <div class="card accent-l">
-          <h4>🔑 Key Principles</h4>
-          <ul>
-            <li><strong style="color:var(--text)">Idempotency</strong> — run 1x or 100x, same result</li>
-            <li><strong style="color:var(--text)">Declarative</strong> — describe WHAT, not HOW</li>
-            <li><strong style="color:var(--text)">Version-controlled</strong> — config as code in git</li>
-            <li><strong style="color:var(--text)">Drift correction</strong> — re-apply on schedule</li>
-          </ul>
-        </div>
+        <div class="hl"><h4>📖 The Core Problem</h4><p>Left unmanaged, servers <strong style="color:var(--text)">drift</strong>. Engineer A manually installs nginx 1.18. Engineer B forgets. Engineer C installs 1.20. Now your fleet has 3 different configs. This is <strong style="color:var(--red)">configuration drift</strong>.</p></div>
+        <div class="hl green"><h4>✅ Solution: Desired State</h4><p>Configuration Management tools let you declare the <strong style="color:var(--text)">desired state</strong> of a server — "nginx 1.20 installed, port 80 open, firewall enabled" — and continuously enforce it, automatically correcting drift.</p></div>
+        <div class="card al"><h4>🔑 Key Principles</h4><ul><li><strong style="color:var(--text)">Idempotency</strong> — run 1x or 100x, same result</li><li><strong style="color:var(--text)">Declarative</strong> — describe WHAT, not HOW</li><li><strong style="color:var(--text)">Version-controlled</strong> — config as code in git</li><li><strong style="color:var(--text)">Drift correction</strong> — re-apply on schedule</li></ul></div>
       </div>
       <div class="col">
-        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1rem;">
-          <p style="font-size:.7rem;font-weight:700;color:var(--aws-orange);margin-bottom:.6rem;">Evolution of Config Management</p>
-          <div class="step-list">
-            <div class="step-item"><div class="step-num" style="background:var(--muted)">1</div><div class="step-content"><h4>Manual / Shell Scripts</h4><p>Bash scripts run by hand. Not idempotent. Breaks if run twice. No drift detection.</p></div></div>
-            <div class="step-item"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><h4>Chef / Puppet (2005–2010)</h4><p>First generation CM tools. Required dedicated server infrastructure. Complex to operate.</p></div></div>
-            <div class="step-item"><div class="step-num" style="background:var(--purple)">3</div><div class="step-content"><h4>Ansible (2012+)</h4><p>Agentless, YAML playbooks, SSH-based push model. Simpler, widely adopted.</p></div></div>
-            <div class="step-item"><div class="step-num" style="background:var(--aws-orange)">4</div><div class="step-content"><h4>SSM State Manager (Cloud-Native)</h4><p>No SSH, no control node, IAM-based, integrated with AWS fleet management.</p></div></div>
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;flex:1;">
+          <p style="font-size:.85rem;font-weight:700;color:var(--aws-orange);margin-bottom:.7rem;">Evolution of Config Management</p>
+          <div class="steps">
+            <div class="step"><div class="step-n" style="background:var(--muted)">1</div><div><h4>Manual / Shell Scripts</h4><p>Bash scripts run by hand. Not idempotent. Breaks if run twice. No drift detection.</p></div></div>
+            <div class="step"><div class="step-n" style="background:var(--blue)">2</div><div><h4>Chef / Puppet (2005–2010)</h4><p>First generation CM tools. Required dedicated server infrastructure. Complex to operate.</p></div></div>
+            <div class="step"><div class="step-n" style="background:var(--purple)">3</div><div><h4>Ansible (2012+)</h4><p>Agentless, YAML playbooks, SSH-based push model. Simpler, widely adopted.</p></div></div>
+            <div class="step"><div class="step-n" style="background:var(--aws-orange)">4</div><div><h4>SSM State Manager (Cloud-Native)</h4><p>No SSH, no control node, IAM-based, integrated with AWS fleet management.</p></div></div>
           </div>
         </div>
       </div>
@@ -852,36 +758,20 @@ aws ssm start-session \
   </div>
 </div>
 
-<!-- SLIDE 18 — Ansible Deep Dive -->
+<!-- ═══ SLIDE 18 — Ansible Deep Dive ═══ -->
 <div class="slide" id="s18">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">04 · ANSIBLE</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Ansible Overview</div>
-    <div class="s-title">⚙️ Ansible — <span>Agentless Config Management</span></div>
-    <div class="two-col" style="margin-top:.5rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">04 · ANSIBLE</div></div></div>
+  <div class="body slim">
+    <div class="stag">Ansible Overview</div>
+    <div class="sh">⚙️ Ansible — <span>Agentless Config Management</span></div>
+    <div class="row">
       <div class="col">
-        <div class="hl-box blue">
-          <h4>🔍 What is Ansible?</h4>
-          <p>Ansible is an <strong style="color:var(--text)">agentless, push-based</strong> configuration management and automation tool using SSH. You write <strong style="color:var(--text)">Playbooks</strong> in YAML that describe desired state, and Ansible executes them on target hosts.</p>
-        </div>
-        <div class="card accent-l blue" style="margin-top:.5rem;">
-          <h4>🏗️ Core Components</h4>
-          <ul>
-            <li><strong style="color:var(--text)">Control Node</strong> — machine running Ansible (your laptop/CI)</li>
-            <li><strong style="color:var(--text)">Inventory</strong> — list of target hosts (IP/hostname)</li>
-            <li><strong style="color:var(--text)">Playbook</strong> — YAML file declaring desired state</li>
-            <li><strong style="color:var(--text)">Task</strong> — single action (install, copy, service)</li>
-            <li><strong style="color:var(--text)">Module</strong> — built-in functions (yum, apt, copy, template)</li>
-            <li><strong style="color:var(--text)">Role</strong> — reusable group of tasks + variables</li>
-          </ul>
-        </div>
+        <div class="hl blue"><h4>🔍 What is Ansible?</h4><p>Ansible is an <strong style="color:var(--text)">agentless, push-based</strong> configuration management and automation tool using SSH. You write <strong style="color:var(--text)">Playbooks</strong> in YAML that describe desired state, and Ansible executes them on target hosts.</p></div>
+        <div class="card al blue"><h4>🏗️ Core Components</h4><ul><li><strong style="color:var(--text)">Control Node</strong> — machine running Ansible (your laptop/CI)</li><li><strong style="color:var(--text)">Inventory</strong> — list of target hosts (IP/hostname)</li><li><strong style="color:var(--text)">Playbook</strong> — YAML file declaring desired state</li><li><strong style="color:var(--text)">Task</strong> — single action (install, copy, service)</li><li><strong style="color:var(--text)">Module</strong> — built-in functions (yum, apt, copy, template)</li><li><strong style="color:var(--text)">Role</strong> — reusable group of tasks + variables</li></ul></div>
       </div>
       <div class="col">
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>YAML — Example Ansible Playbook</span></div>
+        <div class="code" style="flex:1;">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>YAML — Example Ansible Playbook</span></div>
           <pre><span class="cm">---</span>
 <span class="kw">- name:</span> <span class="str">Configure web servers</span>
   <span class="kw">hosts:</span> <span class="str">web_servers</span>
@@ -916,16 +806,13 @@ aws ssm start-session \
   </div>
 </div>
 
-<!-- SLIDE 19 — Ansible vs SSM -->
+<!-- ═══ SLIDE 19 — Ansible vs SSM ═══ -->
 <div class="slide" id="s19">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">04 · ANSIBLE vs SSM</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Comparison</div>
-    <div class="s-title">⚔️ Ansible vs <span>SSM State Manager</span></div>
-    <div style="overflow-x:auto;margin:.6rem 0;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">04 · ANSIBLE vs SSM</div></div></div>
+  <div class="body slim">
+    <div class="stag">Comparison</div>
+    <div class="sh">⚔️ Ansible vs <span>SSM State Manager</span></div>
+    <div style="overflow-x:auto;flex:1;">
       <table class="tbl">
         <thead><tr><th>Feature</th><th>Ansible</th><th>SSM State Manager</th><th>Winner</th></tr></thead>
         <tbody>
@@ -940,40 +827,30 @@ aws ssm start-session \
         </tbody>
       </table>
     </div>
-    <div class="hl-box green">
-      <h4>🎉 Best of Both Worlds: Run Ansible via SSM</h4>
-      <p>Use the <code style="color:var(--aws-orange)">AWS-RunAnsiblePlaybook</code> SSM document to execute Ansible playbooks on your fleet via Run Command — no SSH, no control node, just IAM auth + SSM agent. Get Ansible's rich module ecosystem with SSM's security model.</p>
-    </div>
+    <div class="hl green"><h4>🎉 Best of Both Worlds: Run Ansible via SSM</h4><p>Use the <code style="color:var(--aws-orange)">AWS-RunAnsiblePlaybook</code> SSM document to execute Ansible playbooks on your fleet via Run Command — no SSH, no control node, just IAM auth + SSM agent. Get Ansible's rich module ecosystem with SSM's security model.</p></div>
   </div>
 </div>
 
-<!-- SLIDE 20 — State Manager -->
+<!-- ═══ SLIDE 20 — State Manager ═══ -->
 <div class="slide" id="s20">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">04 · STATE MANAGER</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">SSM State Manager</div>
-    <div class="s-title">🔄 Continuous Compliance with <span>State Manager</span></div>
-    <div class="two-col" style="margin-top:.5rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">04 · STATE MANAGER</div></div></div>
+  <div class="body slim">
+    <div class="stag">SSM State Manager</div>
+    <div class="sh">🔄 Continuous Compliance with <span>State Manager</span></div>
+    <div class="row">
       <div class="col">
-        <div class="card accent-l purple">
-          <h4>📖 What is State Manager?</h4>
-          <p>State Manager uses <strong style="color:var(--text)">Associations</strong> — links between an SSM Document and a set of targets — to continuously enforce desired configuration on a schedule. New instances matching the target tags <strong style="color:var(--text)">automatically inherit</strong> the association.</p>
-        </div>
-        <div class="card accent-l purple" style="margin-top:.5rem;">
-          <h4>🔄 The Lifecycle</h4>
-          <div class="step-list">
-            <div class="step-item" style="background:rgba(124,77,255,.1)"><div class="step-num" style="background:var(--purple)">1</div><div class="step-content"><h4>Define Association</h4><p>Link SSM Document to targets (tag: Env=prod)</p></div></div>
-            <div class="step-item" style="background:rgba(124,77,255,.1)"><div class="step-num" style="background:var(--purple)">2</div><div class="step-content"><h4>Schedule Trigger</h4><p>Run every 30 min, hourly, daily via cron/rate</p></div></div>
-            <div class="step-item" style="background:rgba(124,77,255,.1)"><div class="step-num" style="background:var(--purple)">3</div><div class="step-content"><h4>Apply Config + Check Drift</h4><p>Re-apply desired state, report compliance status</p></div></div>
+        <div class="card al purple"><h4>📖 What is State Manager?</h4><p>State Manager uses <strong style="color:var(--text)">Associations</strong> — links between an SSM Document and a set of targets — to continuously enforce desired configuration on a schedule. New instances matching the target tags <strong style="color:var(--text)">automatically inherit</strong> the association.</p></div>
+        <div class="card al purple"><h4>🔄 The Lifecycle</h4>
+          <div class="steps">
+            <div class="step" style="background:rgba(124,77,255,.1);"><div class="step-n" style="background:var(--purple)">1</div><div><h4>Define Association</h4><p>Link SSM Document to targets (tag: Env=prod)</p></div></div>
+            <div class="step" style="background:rgba(124,77,255,.1);"><div class="step-n" style="background:var(--purple)">2</div><div><h4>Schedule Trigger</h4><p>Run every 30 min, hourly, daily via cron/rate</p></div></div>
+            <div class="step" style="background:rgba(124,77,255,.1);"><div class="step-n" style="background:var(--purple)">3</div><div><h4>Apply Config + Check Drift</h4><p>Re-apply desired state, report compliance status</p></div></div>
           </div>
         </div>
       </div>
       <div class="col">
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Create State Manager Association</span></div>
+        <div class="code" style="flex:1;">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Create State Manager Association</span></div>
           <pre><span class="cm"># Install & keep CloudWatch Agent on all prod</span>
 aws ssm create-association \
   --name <span class="str">"AWS-ConfigureAWSPackage"</span> \
@@ -991,27 +868,16 @@ aws ssm create-association \
     <span class="str">'{"playbookurl":["s3://mybucket/nginx-playbook.yml"]}'</span> \
   --schedule-expression <span class="str">"cron(0 2 * * ? *)"</span></pre>
         </div>
-        <div class="card accent-l purple" style="margin-top:.5rem;">
-          <h4>📊 Use Cases</h4>
-          <ul>
-            <li>🛡️ Security agent always installed</li>
-            <li>📦 Package versions enforced fleet-wide</li>
-            <li>📁 Config files always up-to-date</li>
-            <li>📊 Inventory collection on schedule</li>
-          </ul>
-        </div>
+        <div class="card al purple"><h4>📊 Use Cases</h4><ul><li>🛡️ Security agent always installed</li><li>📦 Package versions enforced fleet-wide</li><li>📁 Config files always up-to-date</li><li>📊 Inventory collection on schedule</li></ul></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 21 — SECTION: RUN COMMAND (moved before Parameter Store) -->
-<div class="slide section-divider" id="s21">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 05</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 21 — SECTION 05: RUN COMMAND ═══ -->
+<div class="slide sec-div" id="s21">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 05</div></div></div>
+  <div class="body">
     <div class="sd-num">05</div>
     <div class="sd-tag">Fleet Operations</div>
     <div class="sd-title">▶️ Run Command</div>
@@ -1019,19 +885,16 @@ aws ssm create-association \
   </div>
 </div>
 
-<!-- SLIDE 22 — Run Command Detail -->
+<!-- ═══ SLIDE 22 — Run Command Detail ═══ -->
 <div class="slide" id="s22">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">05 · RUN COMMAND</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Run Command</div>
-    <div class="s-title">▶️ <span>Run Command</span> Architecture &amp; Usage</div>
-    <div class="two-col" style="margin-top:.5rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">05 · RUN COMMAND</div></div></div>
+  <div class="body slim">
+    <div class="stag">Run Command</div>
+    <div class="sh">▶️ <span>Run Command</span> Architecture &amp; Usage</div>
+    <div class="row">
       <div class="col">
-        <div class="code-wrap">
-          <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Run Command Examples</span></div>
+        <div class="code" style="flex:1;">
+          <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>BASH — Run Command Examples</span></div>
           <pre><span class="cm"># Run shell script on all prod instances</span>
 aws ssm send-command \
   --document-name <span class="str">"AWS-RunShellScript"</span> \
@@ -1049,81 +912,46 @@ aws ssm send-command \
 
 <span class="cm"># Check command status</span>
 aws ssm list-command-invocations \
-  --command-id <span class="str">COMMAND_ID</span> \
-  --details</pre>
-        </div>
-        <div class="card accent-l green" style="margin-top:.5rem;">
-          <h4>📄 Common Documents</h4>
-          <ul>
-            <li><code style="color:var(--blue)">AWS-RunShellScript</code> — Linux shell</li>
-            <li><code style="color:var(--blue)">AWS-RunPowerShellScript</code> — Windows PS</li>
-            <li><code style="color:var(--blue)">AWS-UpdateSSMAgent</code> — update agent</li>
-            <li><code style="color:var(--blue)">AWS-RunAnsiblePlaybook</code> — Ansible</li>
-            <li><code style="color:var(--blue)">AWS-ApplyPatchBaseline</code> — OS patches</li>
-          </ul>
+  --command-id <span class="str">COMMAND_ID</span> --details</pre>
         </div>
       </div>
       <div class="col">
-        <div class="card accent-l">
-          <h4>🎯 Target Selection</h4>
-          <ul>
-            <li><strong style="color:var(--text)">Instance IDs</strong> — exact targets</li>
-            <li><strong style="color:var(--text)">Resource Tags</strong> — <code style="color:var(--aws-orange)">Env=prod</code></li>
-            <li><strong style="color:var(--text)">Resource Groups</strong> — AWS group</li>
-            <li><strong style="color:var(--text)">All Managed Instances</strong></li>
-          </ul>
-        </div>
-        <div class="card accent-l red" style="margin-top:.5rem;">
-          <h4>⚙️ Safety Controls</h4>
-          <ul>
-            <li><strong style="color:var(--text)">Max Concurrency</strong> — 25% at a time, prevent overload</li>
-            <li><strong style="color:var(--text)">Error Threshold</strong> — stop if 10% fail</li>
-            <li><strong style="color:var(--text)">S3 Output</strong> — full stdout/stderr logged</li>
-            <li><strong style="color:var(--text)">CW Logs</strong> — real-time stream</li>
-          </ul>
-        </div>
-        <div class="card accent-l blue" style="margin-top:.5rem;">
-          <h4>🔄 Run Command vs State Manager</h4>
-          <p><strong style="color:var(--text)">Run Command</strong> = one-time, ad-hoc, immediate<br><strong style="color:var(--text)">State Manager</strong> = recurring, drift-correcting, continuous</p>
-        </div>
+        <div class="card al"><h4>🎯 Target Selection</h4><ul><li><strong style="color:var(--text)">Instance IDs</strong> — exact targets</li><li><strong style="color:var(--text)">Resource Tags</strong> — <code style="color:var(--aws-orange)">Env=prod</code></li><li><strong style="color:var(--text)">Resource Groups</strong> — AWS group</li><li><strong style="color:var(--text)">All Managed Instances</strong></li></ul></div>
+        <div class="card al red"><h4>⚙️ Safety Controls</h4><ul><li><strong style="color:var(--text)">Max Concurrency</strong> — 25% at a time, prevent overload</li><li><strong style="color:var(--text)">Error Threshold</strong> — stop if 10% fail</li><li><strong style="color:var(--text)">S3 Output</strong> — full stdout/stderr logged</li><li><strong style="color:var(--text)">CW Logs</strong> — real-time stream</li></ul></div>
+        <div class="card al green"><h4>📄 Common Documents</h4><ul><li><code style="color:var(--blue)">AWS-RunShellScript</code> — Linux shell</li><li><code style="color:var(--blue)">AWS-RunPowerShellScript</code> — Windows PS</li><li><code style="color:var(--blue)">AWS-RunAnsiblePlaybook</code> — Ansible</li><li><code style="color:var(--blue)">AWS-ApplyPatchBaseline</code> — OS patches</li></ul></div>
+        <div class="card al blue"><h4>🔄 Run Command vs State Manager</h4><p><strong style="color:var(--text)">Run Command</strong> = one-time, ad-hoc, immediate<br><strong style="color:var(--text)">State Manager</strong> = recurring, drift-correcting, continuous</p></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 23 — Run Command Use Cases -->
+<!-- ═══ SLIDE 23 — Run Command Use Cases ═══ -->
 <div class="slide" id="s23">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">05 · RUN COMMAND</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Use Cases</div>
-    <div class="s-title">💡 Run Command <span>Use Cases</span></div>
-    <div class="three-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">05 · RUN COMMAND</div></div></div>
+  <div class="body slim">
+    <div class="stag">Use Cases</div>
+    <div class="sh">💡 Run Command <span>Use Cases</span></div>
+    <div class="grid3">
       <div class="col">
-        <div class="card top-accent"><div class="icon-md">🔄</div><h4>Service Restarts</h4><p>Restart nginx/apache across all web servers tagged <code style="color:var(--aws-orange)">Role=web</code> after a config deploy — without logging into each box.</p></div>
-        <div class="card top-accent"><div class="icon-md">📦</div><h4>Package Updates</h4><p>Update a specific package across the entire fleet. Rate controls (25% at a time) prevent rolling outage.</p></div>
+        <div class="card at"><div class="ico">🔄</div><h4>Service Restarts</h4><p>Restart nginx/apache across all web servers tagged <code style="color:var(--aws-orange)">Role=web</code> after a config deploy — without logging into each box.</p></div>
+        <div class="card at"><div class="ico">📦</div><h4>Package Updates</h4><p>Update a specific package across the entire fleet. Rate controls (25% at a time) prevent rolling outage.</p></div>
       </div>
       <div class="col">
-        <div class="card top-accent blue"><div class="icon-md">🔎</div><h4>Fleet Inspection</h4><p>Run <code style="color:var(--blue)">df -h</code> or <code style="color:var(--blue)">free -m</code> across all instances and aggregate outputs in S3 for capacity planning.</p></div>
-        <div class="card top-accent blue"><div class="icon-md">🩹</div><h4>Emergency Patching</h4><p>Zero-day CVE dropped. Patch every managed instance immediately using <code style="color:var(--blue)">AWS-RunPatchBaseline</code> — no SSH needed.</p></div>
+        <div class="card at blue"><div class="ico">🔎</div><h4>Fleet Inspection</h4><p>Run <code style="color:var(--blue)">df -h</code> or <code style="color:var(--blue)">free -m</code> across all instances and aggregate outputs in S3 for capacity planning.</p></div>
+        <div class="card at blue"><div class="ico">🩹</div><h4>Emergency Patching</h4><p>Zero-day CVE dropped. Patch every managed instance immediately using <code style="color:var(--blue)">AWS-RunPatchBaseline</code> — no SSH needed.</p></div>
       </div>
       <div class="col">
-        <div class="card top-accent green"><div class="icon-md">📜</div><h4>Script Distribution</h4><p>Push and execute a script from S3 across your fleet. Output automatically captured per instance.</p></div>
-        <div class="card top-accent green"><div class="icon-md">🔧</div><h4>Config Validation</h4><p>Run validation scripts to confirm all instances are in the expected state after a deployment or infrastructure change.</p></div>
+        <div class="card at green"><div class="ico">📜</div><h4>Script Distribution</h4><p>Push and execute a script from S3 across your fleet. Output automatically captured per instance.</p></div>
+        <div class="card at green"><div class="ico">🔧</div><h4>Config Validation</h4><p>Run validation scripts to confirm all instances are in expected state after a deployment or infrastructure change.</p></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 24 — SECTION: PARAMETER STORE (now section 06) -->
-<div class="slide section-divider" id="s24">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 06</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 24 — SECTION 06: PARAMETER STORE ═══ -->
+<div class="slide sec-div" id="s24">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 06</div></div></div>
+  <div class="body">
     <div class="sd-num">06</div>
     <div class="sd-tag">Secrets &amp; Configuration</div>
     <div class="sd-title">🗄️ Parameter Store</div>
@@ -1131,23 +959,20 @@ aws ssm list-command-invocations \
   </div>
 </div>
 
-<!-- SLIDE 25 — Parameter Store Overview -->
+<!-- ═══ SLIDE 25 — Parameter Store Overview ═══ -->
 <div class="slide" id="s25">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">06 · PARAMETER STORE</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Overview</div>
-    <div class="s-title">🗄️ Parameter Types &amp; <span>Hierarchy</span></div>
-    <div class="three-col" style="margin-top:.5rem;">
-      <div class="card top-accent blue"><div class="icon-md">📝</div><h4>String</h4><p>Plain text. AMI IDs, endpoint URLs, instance types, feature flags.</p><div style="margin-top:.4rem;"><span class="badge" style="background:rgba(79,195,247,.15);color:var(--blue);">FREE</span></div></div>
-      <div class="card top-accent"><div class="icon-md">📋</div><h4>StringList</h4><p>Comma-separated values. Allowed regions, tag lists, resource IDs.</p><div style="margin-top:.4rem;"><span class="badge" style="background:rgba(255,153,0,.15);color:var(--aws-orange);">FREE</span></div></div>
-      <div class="card top-accent green"><div class="icon-md">🔐</div><h4>SecureString</h4><p>KMS-encrypted. Passwords, API keys, DB connection strings, tokens.</p><div style="margin-top:.4rem;"><span class="badge" style="background:rgba(0,200,83,.15);color:var(--green);">KMS COST</span></div></div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">06 · PARAMETER STORE</div></div></div>
+  <div class="body slim">
+    <div class="stag">Overview</div>
+    <div class="sh">🗄️ Parameter Types &amp; <span>Hierarchy</span></div>
+    <div class="grid3" style="flex:0;gap:.85rem;">
+      <div class="card at blue"><div class="ico">📝</div><h4>String</h4><p>Plain text. AMI IDs, endpoint URLs, instance types, feature flags.</p><div style="margin-top:.4rem;"><span style="background:rgba(79,195,247,.15);color:var(--blue);font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:8px;">FREE</span></div></div>
+      <div class="card at"><div class="ico">📋</div><h4>StringList</h4><p>Comma-separated values. Allowed regions, tag lists, resource IDs.</p><div style="margin-top:.4rem;"><span style="background:rgba(255,153,0,.15);color:var(--aws-orange);font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:8px;">FREE</span></div></div>
+      <div class="card at green"><div class="ico">🔐</div><h4>SecureString</h4><p>KMS-encrypted. Passwords, API keys, DB connection strings, tokens.</p><div style="margin-top:.4rem;"><span style="background:rgba(0,200,83,.15);color:var(--green);font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:8px;">KMS COST</span></div></div>
     </div>
-    <div class="two-col" style="margin-top:.6rem;">
-      <div class="code-wrap">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Hierarchy Example</span></div>
+    <div class="row" style="flex:1;">
+      <div class="code">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Hierarchy Example</span></div>
         <pre><span class="cm"># Path-based hierarchy</span>
 /<span class="kw">myapp</span>/<span class="str">prod</span>/database/password    <span class="cm">(SecureString)</span>
 /<span class="kw">myapp</span>/<span class="str">prod</span>/database/host        <span class="cm">(String)</span>
@@ -1161,31 +986,19 @@ aws ssm get-parameters-by-path \
   --with-decryption</pre>
       </div>
       <div class="col">
-        <div class="card accent-l green">
-          <h4>🔗 Native Integrations</h4>
-          <ul>
-            <li>ECS/EKS — inject as env variables</li>
-            <li>Lambda — extensions layer caching</li>
-            <li>CloudFormation — <code style="color:var(--aws-orange)">{{resolve:ssm:/path}}</code></li>
-            <li>CodeBuild/CodePipeline — build vars</li>
-            <li>EC2 Launch Templates — userdata</li>
-          </ul>
-        </div>
+        <div class="card al green"><h4>🔗 Native Integrations</h4><ul><li>ECS/EKS — inject as env variables</li><li>Lambda — extensions layer caching</li><li>CloudFormation — <code style="color:var(--aws-orange)">{{resolve:ssm:/path}}</code></li><li>CodeBuild/CodePipeline — build vars</li><li>EC2 Launch Templates — userdata</li></ul></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 26 — Parameter Store vs Secrets Manager -->
+<!-- ═══ SLIDE 26 — Parameter Store vs Secrets Manager ═══ -->
 <div class="slide" id="s26">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">06 · PARAMETER STORE</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Parameter Store vs Secrets Manager</div>
-    <div class="s-title">🆚 When to Use <span>Which Service</span>?</div>
-    <div style="overflow-x:auto;margin:.6rem 0;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">06 · PARAMETER STORE</div></div></div>
+  <div class="body slim">
+    <div class="stag">Parameter Store vs Secrets Manager</div>
+    <div class="sh">🆚 When to Use <span>Which Service</span>?</div>
+    <div style="overflow-x:auto;flex:1;">
       <table class="tbl">
         <thead><tr><th>Feature</th><th>SSM Parameter Store</th><th>Secrets Manager</th></tr></thead>
         <tbody>
@@ -1200,20 +1013,14 @@ aws ssm get-parameters-by-path \
         </tbody>
       </table>
     </div>
-    <div class="hl-box" style="margin-top:.5rem;">
-      <h4>💡 Recommendation</h4>
-      <p>Use <strong style="color:var(--text)">Parameter Store</strong> for application config, feature flags, and non-rotating secrets. Use <strong style="color:var(--text)">Secrets Manager</strong> when you need <strong style="color:var(--text)">automatic rotation</strong> (database passwords, API keys with rotation lambda). They can also reference each other.</p>
-    </div>
+    <div class="hl"><h4>💡 Recommendation</h4><p>Use <strong style="color:var(--text)">Parameter Store</strong> for application config, feature flags, and non-rotating secrets. Use <strong style="color:var(--text)">Secrets Manager</strong> when you need <strong style="color:var(--text)">automatic rotation</strong> (database passwords, API keys with rotation lambda). They can also reference each other.</p></div>
   </div>
 </div>
 
-<!-- SLIDE 27 — SECTION: CLI CHEATSHEET (now section 07) -->
-<div class="slide section-divider" id="s27">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SECTION 07</div></div>
-  </div>
-  <div class="slide-body">
+<!-- ═══ SLIDE 27 — SECTION 07: CLI CHEATSHEET ═══ -->
+<div class="slide sec-div" id="s27">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SECTION 07</div></div></div>
+  <div class="body">
     <div class="sd-num">07</div>
     <div class="sd-tag">Reference</div>
     <div class="sd-title">💻 CLI Cheatsheet</div>
@@ -1221,18 +1028,15 @@ aws ssm get-parameters-by-path \
   </div>
 </div>
 
-<!-- SLIDE 28 — CLI Cheatsheet Part 1 -->
+<!-- ═══ SLIDE 28 — CLI Part 1 ═══ -->
 <div class="slide" id="s28">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">07 · CLI CHEATSHEET</div></div>
-  </div>
-  <div class="slide-body pad-sm" style="overflow:hidden;">
-    <div class="s-tag">CLI Reference — Part 1</div>
-    <div class="s-title">💻 <span>SSO &amp; Session Manager</span> Commands</div>
-    <div class="two-col" style="margin-top:.5rem;">
-      <div class="code-wrap" style="overflow:hidden;">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>SSO / IAM Identity Center</span></div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">07 · CLI CHEATSHEET</div></div></div>
+  <div class="body slim">
+    <div class="stag">CLI Reference — Part 1</div>
+    <div class="sh">💻 <span>SSO &amp; Session Manager</span> Commands</div>
+    <div class="row">
+      <div class="code" style="flex:1;">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>SSO / IAM Identity Center</span></div>
         <pre><span class="cm">━━━ SSO SETUP & AUTH ━━━━━━━━━━━━━━━━━━━━</span>
 <span class="cm"># Initial SSO configuration wizard</span>
 aws configure sso
@@ -1252,8 +1056,8 @@ aws configure list-profiles
 <span class="cm"># Logout / clear tokens</span>
 aws sso logout</pre>
       </div>
-      <div class="code-wrap" style="overflow:hidden;">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Session Manager</span></div>
+      <div class="code" style="flex:1;">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Session Manager</span></div>
         <pre><span class="cm">━━━ SESSION MANAGER ━━━━━━━━━━━━━━━━━━━━━</span>
 <span class="cm"># Start interactive shell session</span>
 aws ssm start-session --target <span class="str">i-0abc123</span>
@@ -1278,18 +1082,15 @@ aws ssm terminate-session --session-id <span class="str">SESSION_ID</span></pre>
   </div>
 </div>
 
-<!-- SLIDE 29 — CLI Cheatsheet Part 2 -->
+<!-- ═══ SLIDE 29 — CLI Part 2 ═══ -->
 <div class="slide" id="s29">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">07 · CLI CHEATSHEET</div></div>
-  </div>
-  <div class="slide-body pad-sm" style="overflow:hidden;">
-    <div class="s-tag">CLI Reference — Part 2</div>
-    <div class="s-title">💻 <span>Run Command &amp; Parameter Store</span></div>
-    <div class="two-col" style="margin-top:.5rem;">
-      <div class="code-wrap">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Run Command</span></div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">07 · CLI CHEATSHEET</div></div></div>
+  <div class="body slim">
+    <div class="stag">CLI Reference — Part 2</div>
+    <div class="sh">💻 <span>Run Command &amp; Parameter Store</span></div>
+    <div class="row">
+      <div class="code" style="flex:1;">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Run Command</span></div>
         <pre><span class="cm">━━━ RUN COMMAND ━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 <span class="cm"># Run shell script on tagged instances</span>
 aws ssm send-command \
@@ -1313,8 +1114,8 @@ aws ssm get-command-invocation \
   --command-id <span class="str">CMD_ID</span> \
   --instance-id <span class="str">i-0abc123</span></pre>
       </div>
-      <div class="code-wrap">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Parameter Store</span></div>
+      <div class="code" style="flex:1;">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Parameter Store</span></div>
         <pre><span class="cm">━━━ PARAMETER STORE ━━━━━━━━━━━━━━━━━━━━━</span>
 <span class="cm"># Put a String parameter</span>
 aws ssm put-parameter \
@@ -1347,18 +1148,15 @@ aws ssm delete-parameter \
   </div>
 </div>
 
-<!-- SLIDE 30 — CLI Cheatsheet Part 3 -->
+<!-- ═══ SLIDE 30 — CLI Part 3 ═══ -->
 <div class="slide" id="s30">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">07 · CLI CHEATSHEET</div></div>
-  </div>
-  <div class="slide-body pad-sm" style="overflow:hidden;">
-    <div class="s-tag">CLI Reference — Part 3</div>
-    <div class="s-title">💻 <span>State Manager &amp; Fleet Operations</span></div>
-    <div class="two-col" style="margin-top:.5rem;">
-      <div class="code-wrap">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>State Manager</span></div>
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">07 · CLI CHEATSHEET</div></div></div>
+  <div class="body slim">
+    <div class="stag">CLI Reference — Part 3</div>
+    <div class="sh">💻 <span>State Manager &amp; Fleet Operations</span></div>
+    <div class="row">
+      <div class="code" style="flex:1;">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>State Manager</span></div>
         <pre><span class="cm">━━━ STATE MANAGER ━━━━━━━━━━━━━━━━━━━━━━━</span>
 <span class="cm"># Create association (enforce CW agent)</span>
 aws ssm create-association \
@@ -1387,8 +1185,8 @@ aws ssm start-associations-once \
 aws ssm delete-association \
   --association-id <span class="str">ASSOC_ID</span></pre>
       </div>
-      <div class="code-wrap">
-        <div class="code-bar"><div class="code-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Fleet / Instance Management</span></div>
+      <div class="code" style="flex:1;">
+        <div class="code-bar"><div class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span>Fleet / Instance Management</span></div>
         <pre><span class="cm">━━━ INSTANCE & FLEET MANAGEMENT ━━━━━━━━━</span>
 <span class="cm"># List all managed instances</span>
 aws ssm describe-instance-information
@@ -1424,39 +1222,33 @@ aws ssm send-command \
   </div>
 </div>
 
-<!-- SLIDE 31 — SUMMARY -->
+<!-- ═══ SLIDE 31 — SUMMARY ═══ -->
 <div class="slide" id="s31">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">SUMMARY</div></div>
-  </div>
-  <div class="slide-body pad-sm">
-    <div class="s-tag">Key Takeaways</div>
-    <div class="s-title">🎯 Workshop <span>Summary</span></div>
-    <div class="three-col" style="margin-top:.6rem;">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">SUMMARY</div></div></div>
+  <div class="body slim">
+    <div class="stag">Key Takeaways</div>
+    <div class="sh">🎯 Workshop <span>Summary</span></div>
+    <div class="grid3">
       <div class="col">
-        <div class="card top-accent"><h4>🔐 IAM Identity Center</h4><ul><li>Replace long-term keys with SSO</li><li><code style="color:var(--aws-orange)">aws configure sso</code> once</li><li><code style="color:var(--aws-orange)">aws sso login --profile dev</code> daily</li><li>Short-lived tokens, MFA enforced</li></ul></div>
-        <div class="card top-accent" style="margin-top:.5rem;"><h4>🏰 Bastion Removal</h4><ul><li>Close port 22 on all instances</li><li>Delete bastion EC2 + security groups</li><li>Session Manager = zero inbound ports</li><li>All sessions logged automatically</li></ul></div>
+        <div class="card at"><h4>🔐 IAM Identity Center</h4><ul><li>Replace long-term keys with SSO</li><li><code style="color:var(--aws-orange)">aws configure sso</code> once</li><li><code style="color:var(--aws-orange)">aws sso login --profile dev</code> daily</li><li>Short-lived tokens, MFA enforced</li></ul></div>
+        <div class="card at" style="margin-top:.65rem;"><h4>🏰 Bastion Removal</h4><ul><li>Close port 22 on all instances</li><li>Delete bastion EC2 + security groups</li><li>Session Manager = zero inbound ports</li><li>All sessions logged automatically</li></ul></div>
       </div>
       <div class="col">
-        <div class="card top-accent blue"><h4>🖥️ Session Manager</h4><ul><li>SSM Agent + IAM role on instance</li><li>No SSH keys, no port 22</li><li>Port forwarding replaces VPN</li><li>Full audit to S3/CloudWatch</li></ul></div>
-        <div class="card top-accent blue" style="margin-top:.5rem;"><h4>▶️ Run Command</h4><ul><li>Tag-based fleet targeting</li><li>Rate controls (concurrency + errors)</li><li>Full output to S3/CloudWatch</li><li>One-off vs State Manager recurring</li></ul></div>
+        <div class="card at blue"><h4>🖥️ Session Manager</h4><ul><li>SSM Agent + IAM role on instance</li><li>No SSH keys, no port 22</li><li>Port forwarding replaces VPN</li><li>Full audit to S3/CloudWatch</li></ul></div>
+        <div class="card at blue" style="margin-top:.65rem;"><h4>▶️ Run Command</h4><ul><li>Tag-based fleet targeting</li><li>Rate controls (concurrency + errors)</li><li>Full output to S3/CloudWatch</li><li>One-off vs State Manager recurring</li></ul></div>
       </div>
       <div class="col">
-        <div class="card top-accent purple"><h4>🔧 Config Management</h4><ul><li>Ansible = agentless, YAML, SSH</li><li>SSM State Manager = cloud-native</li><li>Run Ansible VIA SSM (best of both)</li><li>Continuous drift correction</li></ul></div>
-        <div class="card top-accent purple" style="margin-top:.5rem;"><h4>🗄️ Parameter Store</h4><ul><li>Hierarchical paths for env isolation</li><li>SecureString for secrets (KMS)</li><li>Version-tracked, rollback capable</li><li>Native integration everywhere</li></ul></div>
+        <div class="card at purple"><h4>🔧 Config Management</h4><ul><li>Ansible = agentless, YAML, SSH</li><li>SSM State Manager = cloud-native</li><li>Run Ansible VIA SSM (best of both)</li><li>Continuous drift correction</li></ul></div>
+        <div class="card at purple" style="margin-top:.65rem;"><h4>🗄️ Parameter Store</h4><ul><li>Hierarchical paths for env isolation</li><li>SecureString for secrets (KMS)</li><li>Version-tracked, rollback capable</li><li>Native integration everywhere</li></ul></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 32 — THANK YOU -->
+<!-- ═══ SLIDE 32 — THANK YOU ═══ -->
 <div class="slide title-slide" id="s32">
-  <div class="slide-header">
-    <div class="sh-left"><div class="sh-logo">⚙️</div><div class="sh-title">AWS <span>Workshop -1</span> · IPS</div></div>
-    <div class="sh-right"><div class="sh-badge">END</div></div>
-  </div>
-  <div class="slide-body">
+  <div class="hdr"><div class="hdr-l"><div class="hdr-logo">⚙️</div><div class="hdr-title">AWS <span>Workshop -1</span> · IPS</div></div><div class="hdr-r"><div class="hdr-badge">END</div></div></div>
+  <div class="body">
     <div class="ts-badge">🎉 AWS WORKSHOP -1 COMPLETE</div>
     <div class="ts-h1">Thank You!</div>
     <div class="ts-sub">Built by <strong>Intelligent Product Solutions (IPS)</strong> · March 2026<br>Questions? Reach out to <strong>Gopinaath</strong> for follow-up sessions.</div>
@@ -1469,60 +1261,52 @@ aws ssm send-command \
       <div class="ts-pill">🗄️ Parameter Store</div>
       <div class="ts-pill">💻 CLI Cheatsheet</div>
     </div>
-    <div style="font-size:.75rem;color:var(--muted);margin-top:.5rem;">Use ← → arrow keys or click the nav buttons to review slides</div>
+    <div style="font-size:.88rem;color:var(--muted);margin-top:.5rem;">Use ← → arrow keys or click the nav buttons to review slides</div>
   </div>
 </div>
 
-</div>
+</div><!-- /deck -->
 
-<div class="progress-bar" id="progressBar"></div>
-
-<div class="nav-controls">
-  <button class="nav-btn" onclick="prev()">◀</button>
-  <div class="nav-dots" id="navDots"></div>
-  <span class="nav-counter" id="navCounter">1 / 32</span>
-  <button class="nav-btn" onclick="next()">▶</button>
+<div class="prog" id="prog"></div>
+<div class="nav">
+  <button class="nbtn" onclick="prev()">◀</button>
+  <div class="ndots" id="ndots"></div>
+  <span class="nctr" id="nctr">1 / 32</span>
+  <button class="nbtn" onclick="next()">▶</button>
 </div>
-
-<div class="key-hint">
-  <span class="key">←</span><span class="key">→</span> navigate &nbsp;
-  <span class="key">F</span> fullscreen
-</div>
+<div class="khint"><span class="key">←</span><span class="key">→</span> navigate &nbsp;<span class="key">F</span> fullscreen</div>
 
 <script>
-const TOTAL = 32;
-let cur = 1;
+const N = 32;
+let c = 1;
 function goTo(n, dir) {
-  if(n < 1 || n > TOTAL) return;
-  const pe = document.getElementById('s'+cur);
-  const ne = document.getElementById('s'+n);
-  pe.classList.remove('active','prev');
-  ne.classList.remove('prev');
-  ne.classList.add('active');
-  if(dir === 'prev') ne.classList.add('prev');
-  cur = n;
-  update();
+  if(n<1||n>N) return;
+  document.getElementById('s'+c).classList.remove('active','prev');
+  const el = document.getElementById('s'+n);
+  el.classList.remove('prev');
+  el.classList.add('active');
+  if(dir==='prev') el.classList.add('prev');
+  c = n; update();
 }
-function next() { goTo(cur+1,'next'); }
-function prev() { goTo(cur-1,'prev'); }
-function update() {
-  document.getElementById('navCounter').textContent = cur + ' / ' + TOTAL;
-  document.getElementById('progressBar').style.width = (cur/TOTAL*100)+'%';
-  const dots = document.getElementById('navDots');
-  dots.innerHTML = '';
-  const start = Math.max(1, Math.min(cur-5, TOTAL-9));
-  const end = Math.min(TOTAL, start+9);
-  for(let i=start;i<=end;i++){
-    const d = document.createElement('div');
-    d.className = 'nav-dot'+(i===cur?' active':'');
-    d.onclick=(()=>{const n=i;return()=>goTo(n);})();
-    dots.appendChild(d);
+function next(){ goTo(c+1,'next'); }
+function prev(){ goTo(c-1,'prev'); }
+function update(){
+  document.getElementById('nctr').textContent = c+' / '+N;
+  document.getElementById('prog').style.width = (c/N*100)+'%';
+  const d = document.getElementById('ndots');
+  d.innerHTML='';
+  const s=Math.max(1,Math.min(c-5,N-9)), e=Math.min(N,s+9);
+  for(let i=s;i<=e;i++){
+    const dot=document.createElement('div');
+    dot.className='ndot'+(i===c?' on':'');
+    dot.onclick=(()=>{const n=i;return()=>goTo(n);})();
+    d.appendChild(dot);
   }
 }
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key===' ') next();
-  if(e.key==='ArrowLeft') prev();
-  if(e.key==='f'||e.key==='F') document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+  else if(e.key==='ArrowLeft') prev();
+  else if(e.key==='f'||e.key==='F') document.documentElement.requestFullscreen?.();
 });
 let tx=0;
 document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
