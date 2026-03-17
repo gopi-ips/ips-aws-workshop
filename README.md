@@ -1,4 +1,5 @@
 # AWS Workshop — Day 1 | by IPS
+## IAM Identity Center & AWS Systems Manager
 
 A hands-on workshop covering IAM Identity Center (SSO) local setup and four core AWS Systems Manager services — with full CLI and Console (GUI) walkthroughs for every step.
 
@@ -50,6 +51,3 @@ A hands-on workshop covering IAM Identity Center (SSO) local setup and four core
 | Session Manager Plugin | [Install the Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) |
 | SSM Managed Policy | [AmazonSSMManagedInstanceCore](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonSSMManagedInstanceCore.html) |
 
----
-
-> Workshop content maintained by [IPS AI](https://ips-ai.com). For issues or contributions, open a pull request or file an issue on this repository.
