@@ -1,4 +1,4 @@
-# AWS Workshop — Systems Manager & IAM Identity Center
+# AWS Workshop — Day 1 | by IPS
 
 A hands-on workshop covering IAM Identity Center (SSO) local setup and four core AWS Systems Manager services — with full CLI and Console (GUI) walkthroughs for every step.
 
