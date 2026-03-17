@@ -9,7 +9,9 @@ A hands-on workshop covering IAM Identity Center (SSO) local setup and four core
 
 > Open the workshop presentation in your browser:
 >
-> **[▶ View Workshop Slides](https://raw.githack.com/gopi-ips/ips-aws-workshop/main/workshop1.html)**
+> **[▶ View Workshop Slides](https://gopi-ips.github.io/ips-aws-workshop/workshop1.html)**
+
+> **Setup required (one-time):** Go to repo **Settings → Pages → Source → Deploy from branch → `main` → `/ (root)` → Save**. GitHub Pages will be live within a minute.
 
 ---
 
