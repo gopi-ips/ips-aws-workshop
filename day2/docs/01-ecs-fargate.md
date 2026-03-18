@@ -4,6 +4,16 @@ This module walks through deploying a Docker container to AWS ECS Fargate using 
 
 ---
 
+## Variables
+
+```bash
+ACCOUNT_ID="904233105347"
+REGION="ca-central-1"
+SUBNET_ID="subnet-0aa220e91724231d2"
+```
+
+---
+
 ## Step 1 — IAM Roles
 
 ### Task Role (runtime permissions)
@@ -48,18 +58,17 @@ aws iam attach-role-policy \
 # Create the repository
 aws ecr create-repository \
   --repository-name ips-workshop-ecr \
-  --region ca-central-1
+  --region $REGION
 
 # Authenticate Docker to ECR
-aws ecr get-login-password --region ca-central-1 | \
-  docker login --username AWS --password-stdin 904233105347.dkr.ecr.ca-central-1.amazonaws.com
+aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 904233105347.dkr.ecr.ca-central-1.amazonaws.com
 
 # Build the image
 docker build -t ips-workshop-ecr .
 
 # Tag and push
-docker tag ips-workshop-ecr:latest 904233105347.dkr.ecr.ca-central-1.amazonaws.com/ips-workshop-ecr:latest
-docker push 904233105347.dkr.ecr.ca-central-1.amazonaws.com/ips-workshop-ecr:latest
+docker tag ips-workshop-ecr:latest $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/ips-workshop-ecr:latest
+docker push $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/ips-workshop-ecr:latest
 ```
 
 ---
