@@ -1,40 +1,37 @@
-# AWS Workshop — Day 1 | by IPS
-## IAM Identity Center & AWS Systems Manager
+# AWS Workshop | by IPS
+
+---
+
+## Day 1 — IAM Identity Center & AWS Systems Manager
 
 A hands-on workshop covering IAM Identity Center (SSO) local setup and four core AWS Systems Manager services — with full CLI and Console (GUI) walkthroughs for every step.
 
----
+### Slide Deck
 
-## Slide Deck
-
-> Open the workshop presentation in your browser:
->
 > **[▶ View Workshop Slides](https://gopi-ips.github.io/ips-aws-workshop/workshop1.html)**
 
-
-
----
-
-## Modules
+### Modules
 
 | # | Module | Topics Covered |
 |---|---|---|
-| 0 | [Prerequisites](docs/00-prerequisites.md) | AWS CLI v2, Session Manager Plugin |
-| 1 | [IAM Identity Center](docs/01-iam-identity-center.md) | Configure local CLI profiles (dev / stg / prod), login, switch environments |
-| 2 | [SSM Parameter Store](docs/02-parameter-store.md) | Create, read, update, delete, version history, path-based retrieval, SecureString |
-| 3 | [SSM Run Command](docs/03-run-command.md) | Send commands, target by tag, check output, S3/CloudWatch output |
-| 4 | [SSM Session Manager](docs/04-session-manager.md) | Interactive shell, port forwarding, SSH tunnelling, session history |
-| 5 | [SSM State Manager](docs/05-state-manager.md) | Associations, schedules, patch management, custom document enforcement |
-| 6 | [Cleanup](docs/06-cleanup.md) | Remove all workshop resources |
+| 0 | [Prerequisites](day1/docs/00-prerequisites.md) | AWS CLI v2, Session Manager Plugin |
+| 1 | [IAM Identity Center](day1/docs/01-iam-identity-center.md) | Configure local CLI profiles (dev / stg / prod), login, switch environments |
+| 2 | [SSM Parameter Store](day1/docs/02-parameter-store.md) | Create, read, update, delete, version history, path-based retrieval, SecureString |
+| 3 | [SSM Run Command](day1/docs/03-run-command.md) | Send commands, target by tag, check output, S3/CloudWatch output |
+| 4 | [SSM Session Manager](day1/docs/04-session-manager.md) | Interactive shell, port forwarding, SSH tunnelling, session history |
+| 5 | [SSM State Manager](day1/docs/05-state-manager.md) | Associations, schedules, patch management, custom document enforcement |
+| 6 | [Cleanup](day1/docs/06-cleanup.md) | Remove all Day 1 workshop resources |
 
 ---
 
-## How to Use This Workshop
+## Day 2 — ECS Fargate & Containerised Workloads
 
-1. Start with **[Prerequisites](docs/00-prerequisites.md)** to install required tools.
-2. Complete **[IAM Identity Center](docs/01-iam-identity-center.md)** to get your local AWS credentials set up — all subsequent modules depend on this.
-3. Work through modules **2 → 5** in order.
-4. Run **[Cleanup](docs/06-cleanup.md)** when done to avoid unexpected charges.
+> 📁 See **[day2/README.md](day2/README.md)** for the full Day 2 workshop.
+
+| # | Module | Topics Covered |
+|---|---|---|
+| 1 | [ECS Fargate](day2/docs/01-ecs-fargate.md) | IAM roles, ECR, CloudWatch Logs, ECS cluster, task definition, Fargate service |
+| 2 | [Cleanup](day2/docs/02-cleanup.md) | Remove all Day 2 workshop resources |
 
 ---
 
@@ -52,4 +49,7 @@ A hands-on workshop covering IAM Identity Center (SSO) local setup and four core
 | SSM Agent — Ubuntu | [Install SSM Agent on Ubuntu Server](https://docs.aws.amazon.com/systems-manager/latest/userguide/agent-install-ubuntu-64-snap.html) |
 | Session Manager Plugin | [Install the Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html) |
 | SSM Managed Policy | [AmazonSSMManagedInstanceCore](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonSSMManagedInstanceCore.html) |
-
+| ECS Fargate | [Getting started with Amazon ECS using Fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/getting-started-fargate.html) |
+| ECR | [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html) |
+| ECS Task Definitions | [Amazon ECS task definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html) |
+| ECS IAM Roles | [Amazon ECS task IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html) |
