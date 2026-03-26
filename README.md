@@ -35,6 +35,20 @@ A hands-on workshop covering IAM Identity Center (SSO) local setup and four core
 
 ---
 
+## Day 3 — Terraform & Infrastructure as Code
+
+> 📁 See individual module READMEs in **[day3/](day3/)** for full walkthroughs.
+
+| # | Module | Topics Covered |
+|---|---|---|
+| 1 | [S3 Without Module](day3/1.s3_without_module/) | S3 bucket, versioning, lifecycle rules — all resources defined directly in `main.tf` |
+| 2 | [S3 With Module](day3/2.s3_with_module/) | Same S3 setup wrapped in a reusable Terraform module, root config calls the module |
+| 3 | [SSM Without tfvars](day3/3.ssm_without_tfvars/) | SSM Parameter Store (`String` / `SecureString`), variable defaults and `TF_VAR_` env vars |
+| 4 | [SSM With tfvars](day3/4.ssm_with_tfvars/) | Same SSM setup using a `terraform.tfvars` file to supply variable values |
+| 5 | [EC2 with User Data](day3/5.ec2/) | AMI data source, security group, EC2 instance, locals, `merge()` for tags, user data bootstrap |
+
+---
+
 ## AWS Documentation
 
 | Service | Reference |
